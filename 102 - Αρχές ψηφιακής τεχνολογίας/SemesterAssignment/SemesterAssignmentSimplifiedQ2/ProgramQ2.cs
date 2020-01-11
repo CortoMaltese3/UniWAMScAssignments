@@ -48,7 +48,7 @@ namespace SemesterAssignmentSimplifiedQ2
                 }
                 if (value.Remove(1).StartsWith("0"))
                 {
-                    functionResult += " NOT B AND ";
+                    functionResult += "NOT B AND ";
                 }
                 if (value.Remove(1).StartsWith("1"))
                 {
@@ -62,8 +62,9 @@ namespace SemesterAssignmentSimplifiedQ2
                 {
                     functionResult += "C) ";
                 }
-                functionResult += " OR ";
+                functionResult += "OR ";
             }
+            // Not optimal, but -3 removes the "OR " from the end of the string
             Console.WriteLine("\nFunction is: " + functionResult.Remove(functionResult.Length - 3));
             Console.ReadKey();
         }
@@ -76,6 +77,5 @@ namespace SemesterAssignmentSimplifiedQ2
             }
             return false;
         }
-
     }
 }

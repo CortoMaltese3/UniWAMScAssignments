@@ -40,30 +40,27 @@ namespace SemesterAssignmentSimplified
             }
             Console.Clear();
             if (userCombination.Contains("-1"))
-            {                
+            {
                 Console.WriteLine("Goodbye!");
                 Console.ReadKey();
             }
             else
-            {                
-                Console.WriteLine($"Truth Table: {String.Join("",truthTableInputCombination)}");
+            {
+                Console.WriteLine($"Truth Table: {String.Join("", truthTableInputCombination)}");
                 Console.WriteLine($"Input Combination: {String.Join("", userCombination)}");
                 var index = combinations.FindIndex(u => u.Contains(String.Join("", userCombination)));
                 Console.WriteLine($"\nThe function response is: {truthTableInputCombination[index]} ");
                 Console.ReadKey();
             }
         }
-
+        //User input controlls
         static bool IsValidTruthTableValue(string userInput)
         {
             if (userInput == "0" || userInput == "1")
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         static bool IsValidInput(string userInput)
@@ -72,10 +69,7 @@ namespace SemesterAssignmentSimplified
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
     }
 }
