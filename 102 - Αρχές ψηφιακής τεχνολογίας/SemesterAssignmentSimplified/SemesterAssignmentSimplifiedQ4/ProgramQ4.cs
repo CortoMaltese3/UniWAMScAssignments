@@ -8,9 +8,6 @@ namespace SemesterAssignmentSimplifiedQ4
     {
         static void Main(string[] args)
         {
-            //CreateVhdlCode("AND", "OR_GATE", "dataflow", new List<string> {"A", "B"}, "C");
-            //Console.ReadKey();
-
             Console.Write("Enter gate name: ");
             var gateName = Console.ReadLine();
             while (!IsValidGate(gateName.ToUpper()))
@@ -62,7 +59,6 @@ namespace SemesterAssignmentSimplifiedQ4
             Console.WriteLine("The VHDL code of the gate is: \n");
 
             CreateVhdlCode(gateName.ToUpper(), entityName, architectureName, listOfInputs, outputName);
-
             Console.ReadKey();
         }
 

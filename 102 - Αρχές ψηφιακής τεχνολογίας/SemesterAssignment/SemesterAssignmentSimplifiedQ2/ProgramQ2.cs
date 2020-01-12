@@ -35,6 +35,7 @@ namespace SemesterAssignmentSimplifiedQ2
             Console.Clear();
             Console.WriteLine($"Truth Table: " + String.Join("", truthTableInputCombination));
 
+
             foreach (var value in truthTableInputEqualsOne)
             {
                 if (value.StartsWith("0"))
@@ -47,7 +48,7 @@ namespace SemesterAssignmentSimplifiedQ2
                 }
                 if (value.Remove(1).StartsWith("0"))
                 {
-                    functionResult += "NOT B AND ";
+                    functionResult += " NOT B AND ";
                 }
                 if (value.Remove(1).StartsWith("1"))
                 {
@@ -61,12 +62,12 @@ namespace SemesterAssignmentSimplifiedQ2
                 {
                     functionResult += "C) ";
                 }
-                functionResult += "OR ";
+                functionResult += " OR ";
             }
-            // Not optimal, but -3 removes the "OR " from the end of the string
             Console.WriteLine("\nFunction is: " + functionResult.Remove(functionResult.Length - 3));
             Console.ReadKey();
         }
+
         static bool IsValid(string userInput)
         {
             if (userInput == "0" || userInput == "1")
@@ -75,5 +76,6 @@ namespace SemesterAssignmentSimplifiedQ2
             }
             return false;
         }
+
     }
 }

@@ -8,9 +8,10 @@ namespace SemesterAssignmentSimplifiedQ3
     {
         static void Main(string[] args)
         {
+
             Console.Write("Enter Gate Name: ");
             var logicalGate = Console.ReadLine();
-            while (!IsValidGate(logicalGate))
+            while (!isValidGate(logicalGate))
             {
                 Console.Write("Possible values are AND, OR, XOR, NAND, NOR, XNOR. Enter Gate Name: ");
                 logicalGate = Console.ReadLine();
@@ -18,11 +19,13 @@ namespace SemesterAssignmentSimplifiedQ3
 
             Console.Write("Enter number of inputs: ");
             var numberOfInputs = Console.ReadLine();
-            while (!IsValidNumberInput(numberOfInputs))
+            while (!isValidNumberInput(numberOfInputs))
             {
                 Console.WriteLine("Possible values are 2, 3, 4. Enter number of inputs");
                 numberOfInputs = Console.ReadLine();
             }
+
+            var TruthTable = new List<string>();
 
             var TruthTableTwoInputs = new List<string>()
             {
@@ -44,15 +47,15 @@ namespace SemesterAssignmentSimplifiedQ3
             {
                 if (numberOfInputs == "2")
                 {
-                    Console.WriteLine("Truth Table is: " + String.Join("", CalculateFunction_AND(TruthTableTwoInputs)));
+                    Console.WriteLine("Truth Table is: " + String.Join("", CalculateAFunction_AND(TruthTableTwoInputs)));
                 }
                 if (numberOfInputs == "3")
                 {
-                    Console.WriteLine("Truth Table is: " + String.Join("", CalculateFunction_AND(TruthTableThreeInputs)));
+                    Console.WriteLine("Truth Table is: " + String.Join("", CalculateAFunction_AND(TruthTableThreeInputs)));
                 }
                 if (numberOfInputs == "4")
                 {
-                    Console.WriteLine("Truth Table is: " + String.Join("", CalculateFunction_AND(TruthTableFourInputs)));
+                    Console.WriteLine("Truth Table is: " + String.Join("", CalculateAFunction_AND(TruthTableFourInputs)));
                 }
             }
 
@@ -119,29 +122,14 @@ namespace SemesterAssignmentSimplifiedQ3
                 }
             }
 
-            if (logicalGate.ToUpper() == "XNOR")
-            {
-                if (numberOfInputs == "2")
-                {
-                    Console.WriteLine("Truth Table is: " + String.Join("", CalculateFunction_XNOR(TruthTableTwoInputs)));
-                }
-                if (numberOfInputs == "3")
-                {
-                    Console.WriteLine("Truth Table is: " + String.Join("", CalculateFunction_XNOR(TruthTableThreeInputs)));
-                }
-                if (numberOfInputs == "4")
-                {
-                    Console.WriteLine("Truth Table is: " + String.Join("", CalculateFunction_XNOR(TruthTableFourInputs)));
-                }
-            }
-            Console.ReadKey();
+                Console.ReadKey();
         }
 
-        public static List<string> CalculateFunction_AND(List<string> truthTable)
+        public static List<string> CalculateAFunction_AND(List<string> truthTable)
         {            
             var truthTableOutcome = new List<string>();
             foreach (string element in truthTable)
-            {                
+            {
                 if (element.Contains("0"))
                 {
                     truthTableOutcome.Add("0");
@@ -176,7 +164,7 @@ namespace SemesterAssignmentSimplifiedQ3
             var truthTableOutcome = new List<string>();
             foreach (string element in truthTable)
             {
-                if (element.Count(x => x == '1') == 1 || element.Count(x => x == '1') == 3)
+                if (element.Contains("1"))
                 {
                     truthTableOutcome.Add("1");
                 }
@@ -195,11 +183,11 @@ namespace SemesterAssignmentSimplifiedQ3
             {
                 if (element.Contains("1"))
                 {
-                    truthTableOutcome.Add("0");
+                    truthTableOutcome.Add("1");
                 }
                 else
                 {
-                    truthTableOutcome.Add("1");
+                    truthTableOutcome.Add("0");
                 }
             }
             return truthTableOutcome;
@@ -210,7 +198,7 @@ namespace SemesterAssignmentSimplifiedQ3
             var truthTableOutcome = new List<string>();
             foreach (string element in truthTable)
             {
-                if (element.Contains("0"))
+                if (element.Contains("1"))
                 {
                     truthTableOutcome.Add("1");
                 }
@@ -222,28 +210,11 @@ namespace SemesterAssignmentSimplifiedQ3
             return truthTableOutcome;
         }
 
-        public static List<string> CalculateFunction_XNOR(List<string> truthTable)
-        {
-            var truthTableOutcome = new List<string>();
-            foreach (string element in truthTable)
-            {
-                if (element.Count(x => x == '1') == 1 || element.Count(x => x == '1') == 3)
-                {
-                    truthTableOutcome.Add("0");
-                }
-                else
-                {
-                    truthTableOutcome.Add("1");
-                }
-            }
-            return truthTableOutcome;
-        }
-
-        public static bool IsValidGate(string userInput)
+        public static bool isValidGate(string userInput)
         {
             var listOfGates = new List<string>()
             {
-                "AND", "OR", "XOR", "NAND", "XNOR", "NOR"
+                "AND", "OR", "XOR", "NAND", "XNOR"
             };
 
             if (listOfGates.Contains(userInput.ToUpper()))
@@ -256,7 +227,7 @@ namespace SemesterAssignmentSimplifiedQ3
             }
         }
 
-        public static bool IsValidNumberInput(string userInput)
+        public static bool isValidNumberInput(string userInput)
         {
             if (userInput == "2" || userInput == "3" || userInput == "4")
             {
@@ -267,5 +238,42 @@ namespace SemesterAssignmentSimplifiedQ3
                 return false;
             }
         }
+
+        //public static void CalculateTruthTable(string numberOfInputs)
+        //{
+        //    var listOfInputs = new List<string>();
+        //    var num = Math.Pow(2, Convert.ToInt32(numberOfInputs));
+        //    for (int i = 0; i < num; i++)
+        //    {
+                
+        //    }
+        //}
+
+        //public static string LogicalGateCalculate(string userInput)
+        //{
+
+        //    if (logicalGate == "AND")
+        //    {
+
+        //    }
+        //    if (logicalGate == "OR")
+        //    {
+
+        //    }
+        //    if (logicalGate == "XOR")
+        //    {
+
+        //    }
+        //    if (logicalGate == "NAND")
+        //    {
+
+        //    }
+        //    if (logicalGate == "XNOR")
+        //    {
+
+        //    }
+
+
+        //}
     }
 }
