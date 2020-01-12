@@ -35,7 +35,6 @@ namespace SemesterAssignmentSimplifiedQ2
             Console.Clear();
             Console.WriteLine($"Truth Table: " + String.Join("", truthTableInputCombination));
 
-
             foreach (var value in truthTableInputEqualsOne)
             {
                 if (value.StartsWith("0"))
@@ -68,7 +67,6 @@ namespace SemesterAssignmentSimplifiedQ2
             Console.WriteLine("\nFunction is: " + functionResult.Remove(functionResult.Length - 3));
             Console.ReadKey();
         }
-
         static bool IsValid(string userInput)
         {
             if (userInput == "0" || userInput == "1")

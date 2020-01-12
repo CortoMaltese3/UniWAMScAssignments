@@ -9,7 +9,7 @@ namespace SemesterAssignmentSimplified
         {
             var endProgram = false;
             while (!endProgram)
-            {                
+            {
                 var truthTableInputCombination = new List<string>();
                 var userCombination = new List<string>();
                 var combinations = new List<string>
@@ -58,7 +58,7 @@ namespace SemesterAssignmentSimplified
                     Console.Clear();
                 }
             }
-            
+
         }
         //User input controlls
         static bool IsValidTruthTableValue(string userInput)

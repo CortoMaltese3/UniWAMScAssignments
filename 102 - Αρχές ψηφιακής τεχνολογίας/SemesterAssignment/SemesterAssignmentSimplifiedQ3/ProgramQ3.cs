@@ -8,10 +8,9 @@ namespace SemesterAssignmentSimplifiedQ3
     {
         static void Main(string[] args)
         {
-
             Console.Write("Enter Gate Name: ");
             var logicalGate = Console.ReadLine();
-            while (!isValidGate(logicalGate))
+            while (!IsValidGate(logicalGate))
             {
                 Console.Write("Possible values are AND, OR, XOR, NAND, NOR, XNOR. Enter Gate Name: ");
                 logicalGate = Console.ReadLine();
@@ -19,13 +18,11 @@ namespace SemesterAssignmentSimplifiedQ3
 
             Console.Write("Enter number of inputs: ");
             var numberOfInputs = Console.ReadLine();
-            while (!isValidNumberInput(numberOfInputs))
+            while (!IsValidNumberInput(numberOfInputs))
             {
                 Console.WriteLine("Possible values are 2, 3, 4. Enter number of inputs");
                 numberOfInputs = Console.ReadLine();
             }
-
-            var TruthTable = new List<string>();
 
             var TruthTableTwoInputs = new List<string>()
             {
@@ -137,7 +134,6 @@ namespace SemesterAssignmentSimplifiedQ3
                     Console.WriteLine("Truth Table is: " + String.Join("", CalculateFunction_XNOR(TruthTableFourInputs)));
                 }
             }
-
             Console.ReadKey();
         }
 
@@ -243,7 +239,7 @@ namespace SemesterAssignmentSimplifiedQ3
             return truthTableOutcome;
         }
 
-        public static bool isValidGate(string userInput)
+        public static bool IsValidGate(string userInput)
         {
             var listOfGates = new List<string>()
             {
@@ -260,7 +256,7 @@ namespace SemesterAssignmentSimplifiedQ3
             }
         }
 
-        public static bool isValidNumberInput(string userInput)
+        public static bool IsValidNumberInput(string userInput)
         {
             if (userInput == "2" || userInput == "3" || userInput == "4")
             {
@@ -271,42 +267,5 @@ namespace SemesterAssignmentSimplifiedQ3
                 return false;
             }
         }
-
-        //public static void CalculateTruthTable(string numberOfInputs)
-        //{
-        //    var listOfInputs = new List<string>();
-        //    var num = Math.Pow(2, Convert.ToInt32(numberOfInputs));
-        //    for (int i = 0; i < num; i++)
-        //    {
-                
-        //    }
-        //}
-
-        //public static string LogicalGateCalculate(string userInput)
-        //{
-
-        //    if (logicalGate == "AND")
-        //    {
-
-        //    }
-        //    if (logicalGate == "OR")
-        //    {
-
-        //    }
-        //    if (logicalGate == "XOR")
-        //    {
-
-        //    }
-        //    if (logicalGate == "NAND")
-        //    {
-
-        //    }
-        //    if (logicalGate == "XNOR")
-        //    {
-
-        //    }
-
-
-        //}
     }
 }
