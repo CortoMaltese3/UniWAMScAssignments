@@ -88,7 +88,7 @@ namespace SemesterAssignmentSimplifiedQ6
                 "AND", "OR", "NOT", "A", "B", "C"
             };
 
-            userInput.Replace("(", "").Replace(")", "");
+            userInput = userInput.Replace("(", "").Replace(")", "");
 
             foreach (var word in userInput.Split(" "))
             {
