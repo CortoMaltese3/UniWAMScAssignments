@@ -90,10 +90,10 @@ namespace SemesterAssignmentSimplifiedQ5
 
             architectureBody = architectureBody.Remove(architectureBody.Length - 2);
             architectureBody += $";\nEND {architectureName};";
-
-            WriteVhdlCodeToFile(architectureBody);
-
+           
             Console.Write(architectureBody);
+            Console.WriteLine();
+            WriteVhdlCodeToFile(architectureBody);
         }
 
         static bool IsValidName(string userInput)
@@ -152,7 +152,7 @@ namespace SemesterAssignmentSimplifiedQ5
             string fileName = @"circ1.vhd";
             string pathString = Path.Combine(Environment.CurrentDirectory, fileName);
 
-            Console.WriteLine($"\n\nNew file {fileName} has been created at path {pathString}\n");
+            Console.WriteLine($"\n\nNew file {fileName} has been created at path:\n {pathString}\n");
 
             StreamWriter streamWriter = new StreamWriter(pathString);
 
