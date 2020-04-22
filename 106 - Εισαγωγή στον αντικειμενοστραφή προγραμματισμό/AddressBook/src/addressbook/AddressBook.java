@@ -5,17 +5,68 @@
  */
 package addressbook;
 
-/**
- *
- * @author giorg
- */
+import java.util.Scanner;
+
 public class AddressBook {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
+        //printer();
+        while(true){
+           mainMenu(); 
+        }                       
     }
-    
+
+    private static void mainMenu() {
+        
+        Controller controller = new Controller();
+        Scanner userInput = new Scanner(System.in);
+        
+        System.out.println("MAIN MENU");
+        System.out.println("1. Show contacts");
+        System.out.println("2. Add contact");
+        System.out.println("3. Search by name");
+        System.out.println("4. Search by phone number");
+        System.out.println("5. Edit contact");
+        System.out.println("6. Delete contact");
+        System.out.println("7. Exit");
+        
+        int choice = userInput.nextInt();
+        userInput.nextLine();
+        
+        switch(choice){
+        case 1:
+            controller.GetContact("");
+            break;
+         
+        case 2:
+            controller.AddContact();
+            break;
+            
+        case 3:
+            controller.GetContact("");
+            break;
+         
+        case 4:
+            controller.GetContact("");
+            break;
+        
+        case 5:
+            controller.EditContact();
+            break;
+         
+        case 6:
+            controller.DeleteContact();
+            break; 
+            
+       case 7:
+            
+            break;
+         
+        default:
+            
+            break;
+            
+        }
+        
+    }
 }
