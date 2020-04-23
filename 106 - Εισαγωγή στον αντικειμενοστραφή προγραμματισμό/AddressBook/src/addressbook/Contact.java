@@ -13,21 +13,31 @@ import java.util.ArrayList;
  */
 public class Contact {
     
-//    public Contact(){
-//        ArrayList<Contact> ContactList = new ArrayList<Contact>();
-////        ContactList.add(Id = "0", Name = "Giorgos", Surname = "Kalomalos", primaryPhoneNumber = "2108745745", secondaryPhoneNumber = "6978745874", Email = "giorgos.kalomalos@uniwa.gr", Address = "Rodopoleos 160, Athina 11361");
-////        ContactList.add(this.Id = "0", this.Name = "Giorgos", this.Surname = "Kalomalos");
-//        ContactList.add(new Contact(this.Id = "0"));
-//    }
+    public Contact(String id, String name, String surname, String primaryPhoneNumber, String secondaryPhoneNumber, String email, String address){
+        Id = id;
+        Name = name;
+        Surname = surname;
+        PrimaryPhoneNumber = primaryPhoneNumber;
+        SecondaryPhoneNumber = secondaryPhoneNumber;
+        Email = email;
+        Address = address;
+        
+        
+        
+    }
     
     public String Id;
     public String Name;
     public String Surname;
-    public String primaryPhoneNumber;
-    public String secondaryPhoneNumber;
+    public String PrimaryPhoneNumber;
+    public String SecondaryPhoneNumber;
     public String Email;
     public String Address;
         
     public ArrayList<Contact> ContactList;
+
+    Contact() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
 

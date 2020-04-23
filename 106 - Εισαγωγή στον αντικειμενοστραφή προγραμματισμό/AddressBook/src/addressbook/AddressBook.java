@@ -10,7 +10,8 @@ import java.util.Scanner;
 public class AddressBook {
 
     public static void main(String[] args) {
-        //printer();
+        //printer();       
+        
         while(true){
            mainMenu(); 
         }                       
@@ -30,12 +31,21 @@ public class AddressBook {
         System.out.println("6. Delete contact");
         System.out.println("7. Exit");
         
+        System.out.println("\nOption: ");
         int choice = userInput.nextInt();
         userInput.nextLine();
         
         switch(choice){
         case 1:
+            try{
+                Runtime.getRuntime().exec("cls");
+            }
+            catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+            
             controller.GetContact("");
+            userInput.nextLine();
             break;
          
         case 2:
@@ -66,7 +76,12 @@ public class AddressBook {
             
             break;
             
-        }
+        }       
         
     }
+    
+    public static void clearScreen() {  
+        System.out.print("\033[H\033[2J");  
+        System.out.flush();  
+   }
 }
