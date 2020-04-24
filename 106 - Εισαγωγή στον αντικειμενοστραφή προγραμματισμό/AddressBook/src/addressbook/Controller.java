@@ -5,60 +5,98 @@
  */
 package addressbook;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
- * @author giorg
+ * @author Giorgos Kalomalos
  */
 public class Controller {
     
     //public ArrayList<Contact> Contacts = new ArrayList<>();
 
     
-    public List<Contact> GetContact(String searchName){
+    public ArrayList<Contact> GetContacts(int searchOption, String queryString){
         
-        ArrayList<Contact> contactList = new ArrayList<Contact>();
-        contactList.add(new Contact("0", "Giorgos", "Kalomalos", "2104547889", "6987458774", "g.kalomalos@uniwa.gr", "Rodopoleos 150, Athina 11361"));
-        contactList.add(new Contact("1", "Afroditi", "Aktypi", "2104888774", "6998774547", "a.aktypi@uniwa.gr", "Anemou 4, Peiraias 18774"));
+        ArrayList<Contact> contactList = GetAddressBook();
+        ArrayList<Contact> returnList = new ArrayList<Contact>();
         
-//        List<Contact> result = new ArrayList<Contact>();
-//        Contact contact = new Contact();
-//        result = contact.ContactList;
-//        
-        for (int i = 0; i < contactList.size(); i++) {
-            System.out.println(FullString(contactList.get(i).Id) + FullString(contactList.get(i).Name) + FullString(contactList.get(i).Surname) + FullString(contactList.get(i).PrimaryPhoneNumber) + FullString(contactList.get(i).SecondaryPhoneNumber) + FullString(contactList.get(i).Email) + FullString(contactList.get(i).Address));            
-        }
-        
-        
-
-                
-        return contactList;
-        
+        if (searchOption == 1) {
+            for (int i = 0; i <contactList.size(); i++) {
+                String fullName = contactList.get(i).Name.concat(contactList.get(i).Surname);
+                if (Contains(queryString, fullName)) {
+                    returnList.add(new Contact(contactList.get(i).Name, contactList.get(i).Surname, contactList.get(i).PrimaryPhoneNumber, contactList.get(i).SecondaryPhoneNumber, 
+                            contactList.get(i).Email, contactList.get(i).Address));                    
+                }
+            }
+            return returnList; 
+        }        
+        if (searchOption == 2) {
+            for (int i = 0; i <contactList.size(); i++) {
+                String phoneNumbers = contactList.get(i).PrimaryPhoneNumber.concat(contactList.get(i).SecondaryPhoneNumber);
+                if (!Contains(queryString, phoneNumbers)) {
+                    returnList.add(new Contact(contactList.get(i).Name, contactList.get(i).Surname, contactList.get(i).PrimaryPhoneNumber, contactList.get(i).SecondaryPhoneNumber, 
+                            contactList.get(i).Email, contactList.get(i).Address));   
+                }
+            }  
+            return returnList; 
+        }        
+        return contactList;          
     }
     
-    public void AddContact(){
-           
+
+    
+    public ArrayList<Contact> AddContact(){
+        ArrayList<Contact> addressBook = GetAddressBook();
+        addressBook.add(new Contact("Giorgos", "Kalomalos", "2104547889", "6987458774", "g.kalomalos@uniwa.gr", "Rodopoleos 150, Athina 11361"));
+
+        return addressBook;
     }
     
     public void EditContact(){
         
     }
     
-    public void DeleteContact(){
+    public ArrayList<Contact> DeleteContact(String queryString){
         
+        ArrayList<Contact> contactList = GetAddressBook();
+        ArrayList<Contact> returnList = new ArrayList<Contact>();
+        
+        for (int i = 0; i <contactList.size(); i++) {
+            String fullName = contactList.get(i).Name.concat(contactList.get(i).Surname);
+                if (!Contains(queryString, fullName)) {
+                    returnList.add(new Contact(contactList.get(i).Name, contactList.get(i).Surname, contactList.get(i).PrimaryPhoneNumber, contactList.get(i).SecondaryPhoneNumber, 
+                    contactList.get(i).Email, contactList.get(i).Address));                    
+                }
+        }   
+        return returnList;
     }
+    
+    public ArrayList<Contact> GetAddressBook(){        
+    ArrayList<Contact> addressBook = new ArrayList<Contact>();
+    addressBook.add(new Contact("Giorgos", "Kalomalos", "2104547889", "6987458774", "g.kalomalos@uniwa.gr", "Rodopoleos 150, Athina 11361"));
+    addressBook.add(new Contact("Afroditi", "Aktypi", "2104888774", "6998774547", "a.aktypi@uniwa.gr", "Anemou 4, Peiraias 18774"));
+    addressBook.add(new Contact("Maria", "Lagoudi", "2791054785", "6978558747", "maria.lagoudi@gmail.com", "Katsavraha 12, Palaiohori"));
+    addressBook.add(new Contact("Ioanna", "Stathoulopoulou", "6945547845", "-", "ioanna@ioanna.gr", "-"));
+    addressBook.add(new Contact("Giorgos", "Karatassos", "2721024789", "6987457885", "a.aktypi@uniwa.gr", "Tektonon 12, Keratsini 18755"));
+
+    return addressBook;
+}
     
     public static String FullString(String s){
         while(s.length() < 25){
             s = s + " ";
-        }
-        
-        return s;
-        
-        
+        }        
+        return s;                
     }
+    
+    private boolean Contains(String queryString, String addressBookEntry){
+        return addressBookEntry.contains(queryString);               
+    }
+    
 
 }
 

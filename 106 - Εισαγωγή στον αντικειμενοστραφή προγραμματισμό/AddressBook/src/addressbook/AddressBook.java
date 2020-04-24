@@ -5,6 +5,7 @@
  */
 package addressbook;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class AddressBook {
@@ -37,27 +38,27 @@ public class AddressBook {
         
         switch(choice){
         case 1:
-            try{
-                Runtime.getRuntime().exec("cls");
-            }
-            catch(Exception e){
-                System.out.println(e.getMessage());
-            }
-            
-            controller.GetContact("");
-            userInput.nextLine();
+            clearScreen();            
+            GridView(controller.GetContacts(0, ""));  
+            resetScreen();
             break;
          
         case 2:
-            controller.AddContact();
+            clearScreen();  
+            GridView(controller.AddContact());
+            resetScreen();
             break;
             
         case 3:
-            controller.GetContact("");
+            clearScreen();            
+            GridView(controller.GetContacts(1, "Giorgos"));
+            resetScreen();
             break;
          
         case 4:
-            controller.GetContact("");
+            clearScreen();            
+            GridView(controller.GetContacts(2, "6945547845"));
+            resetScreen();
             break;
         
         case 5:
@@ -65,10 +66,12 @@ public class AddressBook {
             break;
          
         case 6:
-            controller.DeleteContact();
+            GridView(controller.DeleteContact("Giorgos"));
+            resetScreen();
             break; 
             
        case 7:
+            System.out.println("Terminating...");
             
             break;
          
@@ -81,7 +84,31 @@ public class AddressBook {
     }
     
     public static void clearScreen() {  
-        System.out.print("\033[H\033[2J");  
-        System.out.flush();  
-   }
+        try{
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public static void resetScreen(){
+        System.out.println("Press any key to continue...");
+        Scanner userInput = new Scanner(System.in);
+        userInput.nextLine();        
+        clearScreen();
+    }
+    
+        public static void GridView(List<Contact> contactList){
+        String leftAlignFormat = "| %-15s | %-15s | %-15s | %-15s | %-30s | %-30s |%n";
+
+        System.out.format("+-----------------+-----------------+-----------------+-----------------+--------------------------------+--------------------------------+%n");
+        System.out.format("| First Name      | Last Name       | Primary Phone   | Secondary Phone | Email                          | Address                        |%n");
+        System.out.format("+-----------------+-----------------+-----------------+-----------------+--------------------------------+--------------------------------+%n");
+        for (int i = 0; i < contactList.size(); i++) {            
+            System.out.format(leftAlignFormat, contactList.get(i).Name, contactList.get(i).Surname, contactList.get(i).PrimaryPhoneNumber, contactList.get(i).SecondaryPhoneNumber, 
+                    contactList.get(i).Email, contactList.get(i).Address);
+        }
+        System.out.format("+-----------------+-----------------+-----------------+-----------------+--------------------------------+--------------------------------+%n");
+    }
 }

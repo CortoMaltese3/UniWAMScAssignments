@@ -13,8 +13,7 @@ import java.util.ArrayList;
  */
 public class Contact {
     
-    public Contact(String id, String name, String surname, String primaryPhoneNumber, String secondaryPhoneNumber, String email, String address){
-        Id = id;
+    public Contact(String name, String surname, String primaryPhoneNumber, String secondaryPhoneNumber, String email, String address){
         Name = name;
         Surname = surname;
         PrimaryPhoneNumber = primaryPhoneNumber;
@@ -26,7 +25,6 @@ public class Contact {
         
     }
     
-    public String Id;
     public String Name;
     public String Surname;
     public String PrimaryPhoneNumber;
