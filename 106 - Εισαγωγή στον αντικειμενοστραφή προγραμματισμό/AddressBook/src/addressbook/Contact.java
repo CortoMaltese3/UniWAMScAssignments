@@ -1,16 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package addressbook;
-
 import java.util.ArrayList;
 
-/**
- *
- * @author Giorgos Kalomalos
- */
 public class Contact {
     
     public Contact(String name, String surname, String primaryPhoneNumber, String secondaryPhoneNumber, String email, String address){
@@ -19,10 +9,7 @@ public class Contact {
         PrimaryPhoneNumber = primaryPhoneNumber;
         SecondaryPhoneNumber = secondaryPhoneNumber;
         Email = email;
-        Address = address;
-        
-        
-        
+        Address = address;                        
     }
     
     public String Name;
@@ -33,9 +20,4 @@ public class Contact {
     public String Address;
         
     public ArrayList<Contact> ContactList;
-
-    Contact() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }
-

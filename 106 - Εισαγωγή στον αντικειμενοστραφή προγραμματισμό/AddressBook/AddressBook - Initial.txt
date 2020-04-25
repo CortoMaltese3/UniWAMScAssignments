@@ -1,0 +1,5 @@
+Giorgos,Kalomalos,2104547889,6987458774,g.kalomalos@uniwa.gr,Rodopoleos 150 Athina 11361
+Afroditi,Aktypi,2104888774,6998774547,a.aktypi@uniwa.gr,Anemou 4 Peiraias 18774
+Maria,Lagoudi,2791054785,6978558747,maria.lagoudi@gmail.com,Katsavraha 12 Palaiohori
+Ioanna, Stathoulopoulou,6945547845,-,ioanna@ioanna.gr,-
+Giorgos,Karatassos,2721024789,6987457885,giorgos.kara@uniwa.gr,Tektonon 12 Keratsini 18755

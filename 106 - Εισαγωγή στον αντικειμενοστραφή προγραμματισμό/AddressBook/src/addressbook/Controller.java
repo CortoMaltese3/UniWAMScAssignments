@@ -1,90 +1,116 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package addressbook;
-
-import java.awt.Dimension;
-import java.awt.Toolkit;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
 
-/**
- *
- * @author Giorgos Kalomalos
- */
 public class Controller {
     
-    //public ArrayList<Contact> Contacts = new ArrayList<>();
-
-    
-    public ArrayList<Contact> GetContacts(int searchOption, String queryString){
-        
+    private final Manager manager = new Manager();    
+    private final String currentWorkingDirectory = manager.GetCurrentWorkingFolderPath();
+       
+    public ArrayList<Contact> GetContacts(int searchOption){        
         ArrayList<Contact> contactList = GetAddressBook();
-        ArrayList<Contact> returnList = new ArrayList<Contact>();
-        
+        ArrayList<Contact> returnQueryList = new ArrayList<>();
+             
         if (searchOption == 1) {
-            for (int i = 0; i <contactList.size(); i++) {
+            System.out.println("Enter first or last name: "); 
+            String queryString = manager.UserStringInput();
+            for (int i = 0; i <contactList.size(); i++) {                
                 String fullName = contactList.get(i).Name.concat(contactList.get(i).Surname);
-                if (Contains(queryString, fullName)) {
-                    returnList.add(new Contact(contactList.get(i).Name, contactList.get(i).Surname, contactList.get(i).PrimaryPhoneNumber, contactList.get(i).SecondaryPhoneNumber, 
+                if (manager.Contains(queryString, fullName)) {
+                    returnQueryList.add(new Contact(contactList.get(i).Name, contactList.get(i).Surname, contactList.get(i).PrimaryPhoneNumber, contactList.get(i).SecondaryPhoneNumber, 
                             contactList.get(i).Email, contactList.get(i).Address));                    
                 }
             }
-            return returnList; 
+            return returnQueryList; 
         }        
-        if (searchOption == 2) {
-            for (int i = 0; i <contactList.size(); i++) {
+        else if (searchOption == 2) {
+            System.out.println("Enter primary or secondary phone number: ");
+            String queryString = manager.UserStringInput();
+            for (int i = 0; i <contactList.size(); i++) {               
                 String phoneNumbers = contactList.get(i).PrimaryPhoneNumber.concat(contactList.get(i).SecondaryPhoneNumber);
-                if (!Contains(queryString, phoneNumbers)) {
-                    returnList.add(new Contact(contactList.get(i).Name, contactList.get(i).Surname, contactList.get(i).PrimaryPhoneNumber, contactList.get(i).SecondaryPhoneNumber, 
+                if (manager.Contains(queryString, phoneNumbers)) {
+                    returnQueryList.add(new Contact(contactList.get(i).Name, contactList.get(i).Surname, contactList.get(i).PrimaryPhoneNumber, contactList.get(i).SecondaryPhoneNumber, 
                             contactList.get(i).Email, contactList.get(i).Address));   
                 }
             }  
-            return returnList; 
+            return returnQueryList; 
         }        
-        return contactList;          
+        return contactList;
     }
-    
-
-    
-    public ArrayList<Contact> AddContact(){
-        ArrayList<Contact> addressBook = GetAddressBook();
-        addressBook.add(new Contact("Giorgos", "Kalomalos", "2104547889", "6987458774", "g.kalomalos@uniwa.gr", "Rodopoleos 150, Athina 11361"));
-
-        return addressBook;
+       
+    public void AddContact(){        
+        Contact newContact = manager.CreateContact();         
+        File file = new File(currentWorkingDirectory+"\\AddressBook.txt");
+        
+        try {
+            FileWriter writer = new FileWriter(file, true);
+            BufferedWriter bufWriter = new BufferedWriter(writer);
+            bufWriter.write("\r\n" + newContact.Name + "," + newContact.Surname + "," + newContact.PrimaryPhoneNumber + "," + newContact.SecondaryPhoneNumber + "," + newContact.Email + "," + newContact.Address);
+            bufWriter.close();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage()); 
+        }
     }
     
     public void EditContact(){
         
     }
     
-    public ArrayList<Contact> DeleteContact(String queryString){
-        
+    public void DeleteContact(){
         ArrayList<Contact> contactList = GetAddressBook();
-        ArrayList<Contact> returnList = new ArrayList<Contact>();
+        ArrayList<Contact> returnList = new ArrayList<>();
+        
+        System.out.println("Enter first or last name: ");        
+        String queryString = manager.UserStringInput();
         
         for (int i = 0; i <contactList.size(); i++) {
-            String fullName = contactList.get(i).Name.concat(contactList.get(i).Surname);
-                if (!Contains(queryString, fullName)) {
+            String addressBookEntry = contactList.get(i).Name.concat(contactList.get(i).Surname);
+                if (!manager.Contains(queryString, addressBookEntry)) {
                     returnList.add(new Contact(contactList.get(i).Name, contactList.get(i).Surname, contactList.get(i).PrimaryPhoneNumber, contactList.get(i).SecondaryPhoneNumber, 
                     contactList.get(i).Email, contactList.get(i).Address));                    
                 }
-        }   
-        return returnList;
+        }          
+                        
+        File file = new File(currentWorkingDirectory+"\\AddressBook.txt");
+        
+        try {
+            FileWriter writer = new FileWriter(file);
+            PrintWriter prWriter = new PrintWriter(currentWorkingDirectory+"\\AddressBook.txt");
+            prWriter.close();
+            BufferedWriter bufWriter = new BufferedWriter(writer);            
+            for (int i = 0; i < returnList.size(); i++) {
+                bufWriter.write("\r\n" + returnList.get(i).Name + "," + returnList.get(i).Surname + "," + returnList.get(i).PrimaryPhoneNumber + "," + returnList.get(i).SecondaryPhoneNumber + "," + returnList.get(i).Email + "," + returnList.get(i).Address);                
+            }
+            bufWriter.close();
+        } catch (Exception ex){
+            System.out.println(ex.getMessage()); 
+        }         
     }
     
-    public ArrayList<Contact> GetAddressBook(){        
-    ArrayList<Contact> addressBook = new ArrayList<Contact>();
-    addressBook.add(new Contact("Giorgos", "Kalomalos", "2104547889", "6987458774", "g.kalomalos@uniwa.gr", "Rodopoleos 150, Athina 11361"));
-    addressBook.add(new Contact("Afroditi", "Aktypi", "2104888774", "6998774547", "a.aktypi@uniwa.gr", "Anemou 4, Peiraias 18774"));
-    addressBook.add(new Contact("Maria", "Lagoudi", "2791054785", "6978558747", "maria.lagoudi@gmail.com", "Katsavraha 12, Palaiohori"));
-    addressBook.add(new Contact("Ioanna", "Stathoulopoulou", "6945547845", "-", "ioanna@ioanna.gr", "-"));
-    addressBook.add(new Contact("Giorgos", "Karatassos", "2721024789", "6987457885", "a.aktypi@uniwa.gr", "Tektonon 12, Keratsini 18755"));
-
-    return addressBook;
-}
+    public ArrayList<Contact> GetAddressBook(){
+        ArrayList<Contact> addressBook = new ArrayList<>();
+        try {
+            File file = new File(currentWorkingDirectory+"\\AddressBook.txt");
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line;
+            String[] parts;
+            
+            while((line = reader.readLine()) != null) {
+                parts = line.split("\\,");
+                addressBook.add(new Contact(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5])); 
+            }            
+            reader.close();                         
+        } 
+        catch (Exception ex) {
+            System.out.println(ex.getMessage());            
+        }
+        return addressBook; 
+    }
     
     public static String FullString(String s){
         while(s.length() < 25){
@@ -92,11 +118,4 @@ public class Controller {
         }        
         return s;                
     }
-    
-    private boolean Contains(String queryString, String addressBookEntry){
-        return addressBookEntry.contains(queryString);               
-    }
-    
-
 }
-
