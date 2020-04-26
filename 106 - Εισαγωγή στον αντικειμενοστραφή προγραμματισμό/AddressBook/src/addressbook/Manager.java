@@ -97,6 +97,12 @@ public class Manager {
         return name;
     }
     
+    public void CheckListSize(ArrayList<Contact> queryContactList){
+        while(queryContactList.size() > 1){
+            
+        }
+    }
+    
     public Contact CreateContact(){        
         System.out.println("Enter first name: ");        
         String firstName = UserStringInput();
@@ -128,11 +134,11 @@ public class Manager {
     }    
     
     public static void ResetScreen(){
-        System.out.println("Press any key to continue...");
+        System.out.println("\r\nPress any key to continue...");
         Scanner userInput = new Scanner(System.in);
         userInput.nextLine();        
         ClearScreen();
-    }
+    }   
     
     public static void GridView(List<Contact> contactList){
         String leftAlignFormat = "| %-20s | %-20s | %-15s | %-15s | %-30s | %-30s |%n";

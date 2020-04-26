@@ -1,21 +1,19 @@
 package addressbook;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
-public class Controller {
-    
+public class Controller {    
     private final Manager manager = new Manager();    
     private final String currentWorkingDirectory = manager.GetCurrentWorkingFolderPath();
        
     public ArrayList<Contact> GetContacts(int searchOption){        
         ArrayList<Contact> contactList = GetAddressBook();
         ArrayList<Contact> returnQueryList = new ArrayList<>();
-             
+        manager.GridView(contactList);
+        
         if (searchOption == 1) {
             System.out.println("Enter first or last name: "); 
             String queryString = manager.UserStringInput();
@@ -39,7 +37,28 @@ public class Controller {
                 }
             }  
             return returnQueryList; 
-        }        
+        }      
+        else if (searchOption == 3){
+            
+            System.out.println("\nEnter first or last name: "); 
+            String queryString = manager.UserStringInput();
+            for (int i = 0; i <contactList.size(); i++) {                
+                String fullName = contactList.get(i).Name.concat(contactList.get(i).Surname);
+                if (manager.Contains(queryString, fullName)) {
+                    returnQueryList.add(new Contact(contactList.get(i).Name, contactList.get(i).Surname, contactList.get(i).PrimaryPhoneNumber, contactList.get(i).SecondaryPhoneNumber, 
+                            contactList.get(i).Email, contactList.get(i).Address));                    
+                }
+            }
+            if (returnQueryList.size() > 1) {
+                manager.ClearScreen();
+                manager.GridView(returnQueryList);                
+                System.out.println("\nSearch string " + queryString + " returned more than one entries. Try a more specific name. ");                
+                manager.ResetScreen();
+                returnQueryList.clear();                
+                GetContacts(3); 
+            }                                     
+            return returnQueryList;                                               
+        }
         return contactList;
     }
        
@@ -49,16 +68,33 @@ public class Controller {
         
         try {
             FileWriter writer = new FileWriter(file, true);
-            BufferedWriter bufWriter = new BufferedWriter(writer);
-            bufWriter.write("\r\n" + newContact.Name + "," + newContact.Surname + "," + newContact.PrimaryPhoneNumber + "," + newContact.SecondaryPhoneNumber + "," + newContact.Email + "," + newContact.Address);
-            bufWriter.close();
+            //BufferedWriter bufWriter = new BufferedWriter(writer);
+            writer.write("\r\n" + newContact.Name + "," + newContact.Surname + "," + newContact.PrimaryPhoneNumber + "," + newContact.SecondaryPhoneNumber + "," + newContact.Email + "," + newContact.Address);
+            writer.close();
         } catch (Exception ex) {
             System.out.println(ex.getMessage()); 
         }
     }
     
-    public void EditContact(){
+    public void EditContact(ArrayList<Contact> selectedContact){
+        ArrayList<Contact> contactList = GetAddressBook();
+        ArrayList<Contact> returnList = new ArrayList<>();
         
+        if (selectedContact.isEmpty()) {
+            System.out.println("No entry found. Try another name. ");
+            manager.ResetScreen();
+        }
+        else{
+            String queryString = selectedContact.get(0).Name.concat(selectedContact.get(0).Surname);
+            for (int i = 0; i <contactList.size(); i++) {
+            String addressBookEntry = contactList.get(i).Name.concat(contactList.get(i).Surname);
+                if (!manager.Contains(queryString, addressBookEntry)) {
+                    returnList.add(new Contact(contactList.get(i).Name, contactList.get(i).Surname, contactList.get(i).PrimaryPhoneNumber, contactList.get(i).SecondaryPhoneNumber, 
+                    contactList.get(i).Email, contactList.get(i).Address));                    
+                }
+        }
+        AddContact();
+        }
     }
     
     public void DeleteContact(){
@@ -74,19 +110,19 @@ public class Controller {
                     returnList.add(new Contact(contactList.get(i).Name, contactList.get(i).Surname, contactList.get(i).PrimaryPhoneNumber, contactList.get(i).SecondaryPhoneNumber, 
                     contactList.get(i).Email, contactList.get(i).Address));                    
                 }
-        }          
-                        
-        File file = new File(currentWorkingDirectory+"\\AddressBook.txt");
+        }                                  
+        File filePath = new File(currentWorkingDirectory+"\\AddressBook.txt");
         
         try {
-            FileWriter writer = new FileWriter(file);
-            PrintWriter prWriter = new PrintWriter(currentWorkingDirectory+"\\AddressBook.txt");
-            prWriter.close();
-            BufferedWriter bufWriter = new BufferedWriter(writer);            
+            FileWriter writer = new FileWriter(filePath);            
+            writer.write("");          
             for (int i = 0; i < returnList.size(); i++) {
-                bufWriter.write("\r\n" + returnList.get(i).Name + "," + returnList.get(i).Surname + "," + returnList.get(i).PrimaryPhoneNumber + "," + returnList.get(i).SecondaryPhoneNumber + "," + returnList.get(i).Email + "," + returnList.get(i).Address);                
+                if (i != returnList.size()-1) 
+                    writer.write(returnList.get(i).Name + "," + returnList.get(i).Surname + "," + returnList.get(i).PrimaryPhoneNumber + "," + returnList.get(i).SecondaryPhoneNumber + "," + returnList.get(i).Email + "," + returnList.get(i).Address + "\r\n");                
+                else
+                    writer.write(returnList.get(i).Name + "," + returnList.get(i).Surname + "," + returnList.get(i).PrimaryPhoneNumber + "," + returnList.get(i).SecondaryPhoneNumber + "," + returnList.get(i).Email + "," + returnList.get(i).Address);                
             }
-            bufWriter.close();
+            writer.close();            
         } catch (Exception ex){
             System.out.println(ex.getMessage()); 
         }         
