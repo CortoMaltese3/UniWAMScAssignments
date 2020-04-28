@@ -3,4 +3,7 @@ Afroditi,Aktypi,2104888774,6998774547,a.aktypi@uniwa.gr,Anemou 4 Peiraias 18774
 Maria,Lagoudi,2791054785,6978558747,maria.lagoudi@gmail.com,Katsavraha 12 Palaiohori
 Ioanna,Stathoulopoulou,6945547845,-,ioanna@ioanna.gr,-
 Giorgos,Karatassos,2721024789,6987457885,giorgos.kara@uniwa.gr,Tektonon 12 Keratsini 18755
-Afroditi,Zevgoli,2104785447,6983878861,-,-
+Paraskevas,Apostolidis,2103407182,6978745887,paraskevas@apostolidis.gr,paraskevas@apostolidis.gr
+Dimitris,Kritikos,2104317998,6985463225,dimitris.kritikos@dimitriskritikos.com,Xaini 145 Keratsini 11875 Attiki Ellada
+Athina,Xristidi,2108745889,6945748532,N/A,Ydras 20 11362 Kupseli Athina Attiki Ellada Planitis Gi MilkyWay Galaxy
+Konstantinos,Perantinos,2751047856,6987458774,-,-
