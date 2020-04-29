@@ -100,8 +100,10 @@ public class Controller {
     public void DeleteContact(){
         ArrayList<Contact> contactList = GetAddressBook();
         ArrayList<Contact> returnList = new ArrayList<>();
-        manager.PrintTitle();
-        //System.out.println("Enter first or last name: ");        
+        ArrayList<Contact> matchingContactList = new ArrayList<>();
+        manager.PrintTitle();    
+        manager.GridView(contactList); 
+        System.out.println();
         String queryString = manager.UserInput(Type.FIRSTNAME);
         
         for (int i = 0; i <contactList.size(); i++) {
@@ -110,24 +112,43 @@ public class Controller {
                     returnList.add(new Contact(contactList.get(i).Name, contactList.get(i).Surname, contactList.get(i).PrimaryPhoneNumber, 
                             contactList.get(i).SecondaryPhoneNumber, contactList.get(i).Email, contactList.get(i).Address));                    
                 }
-        }                                  
-        File filePath = new File(currentWorkingDirectory+"\\AddressBook.txt");
+                else{
+                    matchingContactList.add(new Contact(contactList.get(i).Name, contactList.get(i).Surname, contactList.get(i).PrimaryPhoneNumber, 
+                            contactList.get(i).SecondaryPhoneNumber, contactList.get(i).Email, contactList.get(i).Address));
+                }
+        }
+        manager.GridView(matchingContactList); 
+        if (matchingContactList.isEmpty()) {
+            System.out.println(Manager.ANSI_RED + "\nNo entry found matching the search criteria [" + queryString + "].");            
+        }
         
-        try {
-            FileWriter writer = new FileWriter(filePath);            
-            writer.write("");          
-            for (int i = 0; i < returnList.size(); i++) {
-                if (i != returnList.size()-1) 
-                    writer.write(returnList.get(i).Name + "," + returnList.get(i).Surname + "," + returnList.get(i).PrimaryPhoneNumber + "," +
-                                 returnList.get(i).SecondaryPhoneNumber + "," + returnList.get(i).Email + "," + returnList.get(i).Address + "\r\n");                
-                else
-                    writer.write(returnList.get(i).Name + "," + returnList.get(i).Surname + "," + returnList.get(i).PrimaryPhoneNumber + "," +
-                                 returnList.get(i).SecondaryPhoneNumber + "," + returnList.get(i).Email + "," + returnList.get(i).Address);                
+        else if(matchingContactList.size() > 1){               
+            System.out.println(Manager.ANSI_RED + "\nSearch string [" + queryString + "] returned more than one entries. Try a more specific name. ");            
+        }
+        
+        else{
+            System.out.println(Manager.ANSI_RED + "\nSearch string [" + queryString + "] returned this entry. Would you like to proceed? \r\n" + Manager.ANSI_RESET);    
+            if (manager.IsYesOrNo()) {
+                File filePath = new File(currentWorkingDirectory+"\\AddressBook.txt");
+            try {
+                FileWriter writer = new FileWriter(filePath);            
+                writer.write("");          
+                for (int i = 0; i < returnList.size(); i++) {
+                    if (i != returnList.size()-1) 
+                        writer.write(returnList.get(i).Name + "," + returnList.get(i).Surname + "," + returnList.get(i).PrimaryPhoneNumber + "," +
+                                     returnList.get(i).SecondaryPhoneNumber + "," + returnList.get(i).Email + "," + returnList.get(i).Address + "\r\n");                
+                    else
+                        writer.write(returnList.get(i).Name + "," + returnList.get(i).Surname + "," + returnList.get(i).PrimaryPhoneNumber + "," +
+                                     returnList.get(i).SecondaryPhoneNumber + "," + returnList.get(i).Email + "," + returnList.get(i).Address);                
+                }
+                writer.close();
+                
+            } catch (Exception ex){
+                System.out.println(ex.getMessage()); 
             }
-            writer.close();            
-        } catch (Exception ex){
-            System.out.println(ex.getMessage()); 
-        }         
+            System.out.println(Manager.ANSI_GREEN + "\nContact " + matchingContactList.get(0).Name + " " + matchingContactList.get(0).Surname + " was removed successfully!" + Manager.ANSI_RESET);              
+            }          
+        }        
     }
     
     public void Terminate(){

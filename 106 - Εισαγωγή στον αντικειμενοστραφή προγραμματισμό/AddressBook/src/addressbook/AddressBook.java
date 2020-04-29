@@ -46,7 +46,7 @@ public class AddressBook {
             controller.Terminate();
             return false;
         }
-        //manager.ResetScreen();
+        manager.ResetScreen();
         return true;
     }
 }

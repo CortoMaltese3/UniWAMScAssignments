@@ -64,10 +64,17 @@ public class Manager {
             case MAINMENU:
                 userInput = ScanUserInput(messageList.get(6));
                 while(!IsValidUserInput(userInput, Type.MAINMENU)){
-                    PrintTitle();
-                    userInput = ScanUserInput(messageList.get(6));
+                    PrintMainMenuOptions();                    
+                    userInput = ScanUserInput(messageList.get(6), messageWarningList.get(4));
                 }
-                break;                
+                break;  
+            case YESORNO:
+                userInput = ScanUserInput(messageList.get(7));
+                while(!IsValidUserInput(userInput, Type.YESORNO)){
+                    //PrintTitle();                    
+                    userInput = ScanUserInput(messageList.get(7));
+                }
+                break;  
         }
         return Sanitize(type, userInput);
     }
@@ -122,7 +129,23 @@ public class Manager {
             List<String> mainMenuOptions = Arrays.asList("1","2","3","4","5","6","7");            
             if(!mainMenuOptions.contains(userInput))
                 return false;          
-        }        
+        }      
+        if (type.equals(type.YESORNO)) {
+            if (userInput.equals("Y") || userInput.equals("y") || userInput.equals("N") || userInput.equals("n") ) {
+                return true;
+            }
+            return false;
+        }
+        return true;
+    }
+    
+    public boolean IsYesOrNo(){
+        String userInput = UserInput(Type.YESORNO);
+        if(IsValidUserInput(userInput, Type.YESORNO)){
+            if (userInput.equalsIgnoreCase("N")) {
+                return false;
+            }            
+        }
         return true;
     }
     
@@ -196,7 +219,7 @@ public class Manager {
         String address = UserInput(Type.ADDRESS);
         Contact newContact = new Contact(firstName, lastName, primaryPhone, secondaryPhone, email, address);                
         return newContact;                        
-    }
+    }    
 
     public static void ClearScreen() {
         try{
@@ -246,7 +269,8 @@ public class Manager {
         SECONDARYPHONE,
         EMAIL,
         ADDRESS,
-        MAINMENU
+        MAINMENU,
+        YESORNO
     }
     
     
@@ -258,7 +282,8 @@ public class Manager {
         messageList.add("Enter secondary phone number: ");//3
         messageList.add("Enter email: ");//4
         messageList.add("Enter address: ");//5
-        messageList.add("Enter a valid menu option: ");//6
+        messageList.add("Enter menu option: ");//6
+        messageList.add("Type [Y] to continue or [N] to abort and press [Enter]: ");//7
         return messageList;
     }
     
@@ -268,6 +293,7 @@ public class Manager {
         messageWarningList.add("Requirements: Cannot be empty, contain characters or longer than 15 characters.\r\n\n");//1        
         messageWarningList.add("Requirements: Not specified.");//2      
         messageWarningList.add("Search string returned more than one entries. Try a more specific name.\r\n\n");//3
+        messageWarningList.add("Enter a valid menu option:\r\n\n");//4        
         return messageWarningList;
     }
 }
