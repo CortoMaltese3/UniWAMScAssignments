@@ -1,6 +1,5 @@
 package addressbook;
 import addressbook.Manager.Type;
-import java.util.ArrayList;
 
 public class AddressBook {
     private static final Controller controller = new Controller();
@@ -33,9 +32,7 @@ public class AddressBook {
         }
         
         if (userMenuOption.equals("5")) {
-            ArrayList<Contact> selectedContact = controller.GetContacts(3);
-            manager.GridView(selectedContact);
-            controller.EditContact(selectedContact);
+            controller.EditContact();
         }
         
         if (userMenuOption.equals("6")) {

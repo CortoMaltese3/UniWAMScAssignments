@@ -71,7 +71,6 @@ public class Manager {
             case YESORNO:
                 userInput = ScanUserInput(messageList.get(7));
                 while(!IsValidUserInput(userInput, Type.YESORNO)){
-                    //PrintTitle();                    
                     userInput = ScanUserInput(messageList.get(7));
                 }
                 break;  
@@ -189,6 +188,7 @@ public class Manager {
         }
         return currentDirectory;
     }
+        
     
     public void InitializeAddressBook(){
         File file = new File(GetCurrentWorkingFolderPath()+"\\AddressBook.txt");
@@ -272,7 +272,6 @@ public class Manager {
         MAINMENU,
         YESORNO
     }
-    
     
     private ArrayList<String> MessageList(){
         ArrayList<String> messageList = new ArrayList<>();
