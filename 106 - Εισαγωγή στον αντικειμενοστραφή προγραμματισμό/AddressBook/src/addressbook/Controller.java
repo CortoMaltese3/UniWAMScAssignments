@@ -60,54 +60,10 @@ public class Controller {
         }
         return contactList;
     }
-    
-//    public Contact GetContact(){
-//        ArrayList<Contact> contactList = GetAddressBook();
-//        ArrayList<Contact> matchingContactList = new ArrayList<>();
-//        Contact rValue = null;
-//        manager.PrintTitle(); 
-//        String queryString = manager.UserInput(Type.FIRSTNAME);
-//        for (int i = 0; i <contactList.size(); i++) {
-//            String fullName = contactList.get(i).Name.concat(contactList.get(i).Surname);
-//            if (manager.Contains(queryString, fullName)) {
-//                matchingContactList.add(new Contact(contactList.get(i).Name, contactList.get(i).Surname, contactList.get(i).PrimaryPhoneNumber,
-//                        contactList.get(i).SecondaryPhoneNumber, contactList.get(i).Email, contactList.get(i).Address));
-//            }
-//        }
-//        if (matchingContactList.size() > 1) {
-//            manager.PrintTitle();
-//            manager.GridView(matchingContactList);                
-//            System.out.println(Manager.ANSI_RED + "\nSearch string returned more than one entries. Try a more specific name. ");                
-//            manager.ResetScreen();
-//            matchingContactList.clear();                
-//            GetContact(); 
-//        }
-//        else if(matchingContactList.size() > 1){               
-//            System.out.println(Manager.ANSI_RED + "\nSearch string [" + queryString + "] returned more than one entries. Try a more specific name. ");            
-//        }
-//        else{
-//            rValue.Name = matchingContactList.get(0).Name;
-//            rValue.Surname = matchingContactList.get(0).Surname;
-//            rValue.PrimaryPhoneNumber = matchingContactList.get(0).PrimaryPhoneNumber;
-//            rValue.SecondaryPhoneNumber = matchingContactList.get(0).SecondaryPhoneNumber;
-//            rValue.Email = matchingContactList.get(0).Email;
-//            rValue.Address = matchingContactList.get(0).Address;
-//        }
-//        return rValue;
-//    }
 
     public void AddContact(){        
         Contact newContact = manager.CreateContact();         
-//        File file = new File(currentWorkingDirectory+"\\AddressBook.txt");
         AppendContact(newContact);
-//        try {
-//            FileWriter writer = new FileWriter(file, true);
-//            writer.write("\r\n" + newContact.Name + "," + newContact.Surname + "," + newContact.PrimaryPhoneNumber + "," + newContact.SecondaryPhoneNumber 
-//                                + "," + newContact.Email + "," + newContact.Address);
-//            writer.close();
-//        } catch (Exception ex) {
-//            System.out.println(ex.getMessage());
-//        }
     }
     
     public void AppendContact(Contact newContact){                       
@@ -122,8 +78,7 @@ public class Controller {
             System.out.println(ex.getMessage());
         }
     }
-    
-    
+     
     public void EditContact(ArrayList<Contact> oldContact){
         ArrayList<Contact> editedContactList = new ArrayList();
         manager.PrintTitle();    
@@ -198,8 +153,6 @@ public class Controller {
             }          
         } 
     }
-    
-
     
     public void DeleteContact(){
         ArrayList<Contact> contactList = GetAddressBook();

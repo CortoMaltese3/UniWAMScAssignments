@@ -18,6 +18,5 @@ public class Contact {
     public String SecondaryPhoneNumber;
     public String Email;
     public String Address;
-        
-    public ArrayList<Contact> ContactList;
+       
 }
