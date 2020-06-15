@@ -15,12 +15,7 @@ public class Course {
         this.Id = parts[0];
         this.Title = parts[1];
         this.Semester = parts[2];
-        if (parts[3].equals("")) {
-            this.Professor = "";
-        }
-        else{
-            this.Professor = parts[3];
-        }
+        this.Professor = parts[3];
         this.Profession = parts[4];
     }
 }

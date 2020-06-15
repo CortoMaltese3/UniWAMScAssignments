@@ -16,7 +16,6 @@ public class AllAroundProvider {
      private static final String PROFESSOR_FILE = "\\Professors.txt";
      
     public static void ClearFile(String filePath){
-        FileWriter writer;
         try {
             PrintWriter printWriter = new PrintWriter(GetCurrentWorkingFolderPath() + filePath);
             printWriter.close();
@@ -69,7 +68,8 @@ public class AllAroundProvider {
                 writer.write("\r\nC0201|Introduction to Astrophysics|2|Dagklis Ioannis|Physics");
                 writer.write("\r\nC0202|Quantum Mechanics I|2|Sfetsos K.|Physics");
                 writer.write("\r\nC0301|ElectroDynamics I|3|Georgalas A.|Engineering");
-                writer.write("\r\nC0302|Electronics|3||Engineering");
+                writer.write("\r\nC0302|Electronics|3|*|Engineering");
+                writer.write("\r\n");
                 writer.close();
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());
@@ -99,7 +99,8 @@ public class AllAroundProvider {
                 writer.write("\r\nP0002|Dagklis I.|i.dagklis@uniwa.gr|2103400002|Engineering|C0201");
                 writer.write("\r\nP0003|Sfetsos K.|k.sfetsos@uniwa.gr|2103400003|Physics|C0202");
                 writer.write("\r\nP0004|Georgalas A.|a.georgalas@uniwa.gr|2103400004|Physics|C0301");
-                writer.write("\r\nP0005|Tompras T.|t.tompras@uniwa.gr|2103400005|Engineering|");
+                writer.write("\r\nP0005|Tompras T.|t.tompras@uniwa.gr|2103400005|Engineering|*");
+                writer.write("\r\n");
                 writer.close();
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());
@@ -165,5 +166,10 @@ public class AllAroundProvider {
     public static boolean IsYesOrNo(){
         String userInput = ScanMenuInput("yesOrNo");
         return !(userInput.equalsIgnoreCase("n") || userInput.equalsIgnoreCase("no"));
+    }
+    
+    public static void TerminateHendricks(){
+        PrinterHelper.PrintTitle();
+        System.out.println(PrinterHelper.ANSI_RED + "Terminating..." + PrinterHelper.ANSI_RESET);
     }
 }

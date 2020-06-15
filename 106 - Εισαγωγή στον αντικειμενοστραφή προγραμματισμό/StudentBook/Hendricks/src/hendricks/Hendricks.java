@@ -10,11 +10,8 @@ public class Hendricks {
 
     public static void main(String[] args) {
         AllAroundProvider.InitializeTextFiles();
-        
-        
-        while (MainMenu()) {            
-            
-        }
+        while (MainMenu()) {             
+        }        
     }
     
     private static boolean MainMenu(){        
@@ -28,21 +25,17 @@ public class Hendricks {
                 
                 switch(userStudentMenuOption){
                     case "1":
-                        PrinterHelper.StudentGridView(StudentController.GetStudents());                         
-                        break;
-                    
+                        PrinterHelper.StudentGridView(StudentController.GetStudents());                     
+                        break;    
                     case "2":
                         StudentController.CreateStudent();                        
                         break;
-                        
                     case "3":
                         StudentController.EditStudent();                        
                         break;
-                        
                     case "4":
                         StudentController.DeleteStudent();                        
                         break;  
-
                     case "0":
                         
                         break;
@@ -58,25 +51,20 @@ public class Hendricks {
                     case "1":
                         PrinterHelper.ProfessorGridView(ProfessorController.GetProfessors());                         
                         break;
-                    
                     case "2":
-                        //ProfessorController.CreateProfessor();                        
+                        ProfessorController.CreateProfessor();                        
                         break;
-                        
                     case "3":
-                        //ProfessorController.EditProfessor();                        
+                        ProfessorController.EditProfessor();                        
                         break;
-                        
                     case "4":
-                        //ProfessorController.DeleteProfessor();                        
+                        ProfessorController.DeleteProfessor();                        
                         break;  
-
                     case "0":
                         
                         break;
                 }
                 PrinterHelper.ResetScreen();
-                
                 break;
                 
             case "3":
@@ -87,32 +75,25 @@ public class Hendricks {
                     case "1":
                         PrinterHelper.CourseGridView(CourseController.GetCourses());                         
                         break;
-                    
                     case "2":
-                        //CourseController.CreateCourse();                        
+                        CourseController.CreateCourse();                        
                         break;
-                        
                     case "3":
-                        //CourseController.EditCourse();                        
+                        CourseController.EditCourse();                        
                         break;
-                        
                     case "4":
-                        //CourseController.DeleteCourse();
-                        break;  
-
+                        CourseController.DeleteCourse();
+                        break;
                     case "0":
                         
                         break;
                 }
                 PrinterHelper.ResetScreen();
-                
                 break;
-                
             case "0":
-                
+                AllAroundProvider.TerminateHendricks();
                 return false;
         }
         return true;
     }
-    
 }

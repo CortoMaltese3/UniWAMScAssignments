@@ -8,23 +8,7 @@ import java.util.Comparator;
 
 public class StudentProvider extends AllAroundProvider{
         
-    private static final String STUDENT_FILE = "\\Students.txt";    
-    
-    public static void WriteToStudentsFile(ArrayList<Student> students){
-        for (int i = 0; i < students.size(); i++) {
-            String coursesAssignedToStudent = "";
-            for (int j = 0; j < students.get(i).Courses.size(); j++) {
-                coursesAssignedToStudent = students.get(i).Courses.get(j).Id + ",";
-            }
-            try {                
-            FileWriter writer = CreateFileWriter(STUDENT_FILE, true);
-            writer.write("\r\n" + students.get(i).Id + "|" + students.get(i).Name + "|" + students.get(i).Email + "|" + students.get(i).PhoneNumber + "|" + students.get(i).Semester + "|" + coursesAssignedToStudent + "|");
-            writer.close();
-            } catch (IOException ex) {
-                System.out.println(ex.getMessage());
-            }
-        }
-    }  
+    private static final String STUDENT_FILE = "\\Students.txt";
     
     public static ArrayList<Student> GetStudents(){
         ArrayList <Student> students = new ArrayList<>();
@@ -44,7 +28,6 @@ public class StudentProvider extends AllAroundProvider{
         students.sort(Comparator.comparing((student) -> student.Id));        
         return students;
     }
-       
     
     public static Student GetStudent(String id){
         Student student = new Student();
@@ -95,13 +78,25 @@ public class StudentProvider extends AllAroundProvider{
         }
     }
     
-    public static void DeleteStudent(String id){
+    public static void EditStudent(Student editedStudent){
         ArrayList<Student> students = GetStudents();
-        students.removeIf(student -> (student.Id == null ? id == null : student.Id.equals(id)));
-        students.sort(Comparator.comparing((student) -> student.Id));    
+        students.removeIf(x -> (x.Id == null ? editedStudent.Id == null : x.Id.equals(editedStudent.Id)));
+        students.add(editedStudent); 
+        students.sort(Comparator.comparing((student) -> student.Id));
         AllAroundProvider.ClearFile(STUDENT_FILE);
         for (int i = 0; i < students.size(); i++) {
             AddStudent(students.get(i));
         }
+    }
+    
+    
+        public static void DeleteStudent(String id){
+            ArrayList<Student> students = GetStudents();
+            students.removeIf(student -> (student.Id == null ? id == null : student.Id.equals(id)));
+            students.sort(Comparator.comparing((student) -> student.Id));    
+            AllAroundProvider.ClearFile(STUDENT_FILE);
+            for (int i = 0; i < students.size(); i++) {
+                AddStudent(students.get(i));
+            }
     }
 }

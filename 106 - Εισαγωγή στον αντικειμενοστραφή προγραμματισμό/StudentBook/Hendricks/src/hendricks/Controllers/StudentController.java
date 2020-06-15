@@ -76,15 +76,12 @@ public class StudentController{
         
         newStudent.Courses = GetSemesterCourses(semester);
         PrinterHelper.StudentGridView(newStudentToArrayList);
-        
         StudentProvider.AddStudent(newStudent);
+        System.out.print(PrinterHelper.ANSI_GREEN + "Student " + newStudent.Name + " was added successfully." + PrinterHelper.ANSI_RESET);
     }
     
     public static void EditStudent(){        
-        Student newStudent = new Student();
-        ArrayList<Student> newStudentList = new ArrayList<>();
         ArrayList<Student> students = GetStudents(); 
-        newStudentList.add(newStudent);
         
         PrinterHelper.StudentGridView(students);
         Scanner scanner = new Scanner(System.in);
@@ -95,61 +92,59 @@ public class StudentController{
             System.out.print(PrinterHelper.ANSI_RED + "Enter a valid Student Id: " + PrinterHelper.ANSI_RESET);
             studentId = scanner.nextLine(); 
         }                
-        ArrayList<Student> oldStudent = GetStudent(studentId);
+        ArrayList<Student> studentToBeEdited = GetStudent(studentId);
         
-        newStudent.Id = studentId;
-        
-        PrinterHelper.StudentGridView(newStudentList);
-        System.out.print("Edit name: ");
+        PrinterHelper.StudentGridView(studentToBeEdited);
+        System.out.print(PrinterHelper.ANSI_GREEN + "Leave blank to remain unaffected." + PrinterHelper.ANSI_RESET + "\r\n" + "Edit name: ");
         String name = scanner.nextLine();
-        while (!IsValidInput("name", name)) {  
-            PrinterHelper.StudentGridView(newStudentList);
-            System.out.print(PrinterHelper.ANSI_RED + "Enter a valid name: " + PrinterHelper.ANSI_RESET);
-            name = scanner.nextLine(); 
-        }
-        newStudent.Name = name;
-        PrinterHelper.StudentGridView(newStudentList);
+        if (!name.isEmpty()) {
+            while (!IsValidInput("name", name)) {
+                PrinterHelper.StudentGridView(studentToBeEdited);
+                System.out.print(PrinterHelper.ANSI_GREEN + "Leave blank to remain unaffected." + PrinterHelper.ANSI_RESET + "\r\n" + PrinterHelper.ANSI_RED + "Enter a valid name: " + PrinterHelper.ANSI_RESET);
+                name = scanner.nextLine(); 
+            }
+            studentToBeEdited.get(0).Name = name;
+        }        
+        PrinterHelper.StudentGridView(studentToBeEdited);
         
-        System.out.print("Edit email: ");
+        System.out.print(PrinterHelper.ANSI_GREEN + "Leave blank to remain unaffected." + PrinterHelper.ANSI_RESET + "\r\n" + "Edit email: ");
         String email = scanner.nextLine();
-        while (!IsValidInput("email", email)) {  
-            PrinterHelper.StudentGridView(students);
-            System.out.print(PrinterHelper.ANSI_RED + "Enter a valid email: " + PrinterHelper.ANSI_RESET);
-            email = scanner.nextLine(); 
+        if (!email.isEmpty()) {
+            while (!IsValidInput("email", email)) {  
+                PrinterHelper.StudentGridView(studentToBeEdited);
+                System.out.print(PrinterHelper.ANSI_GREEN + "Leave blank to remain unaffected." + PrinterHelper.ANSI_RESET + "\r\n" + PrinterHelper.ANSI_RED + "Enter a valid email: " + PrinterHelper.ANSI_RESET);
+                email = scanner.nextLine(); 
+           }
+            studentToBeEdited.get(0).Email = email;
         }
-        newStudent.Email = email;
-        PrinterHelper.StudentGridView(newStudentList);
+        PrinterHelper.StudentGridView(studentToBeEdited);
         
-        System.out.print("Edit phone number: ");
+        System.out.print(PrinterHelper.ANSI_GREEN + "Leave blank to remain unaffected." + PrinterHelper.ANSI_RESET + "\r\n" + "Edit phone number: ");
         String phoneNumber = scanner.nextLine();
-        while (!IsValidInput("phoneNumber", phoneNumber)) {  
-            PrinterHelper.StudentGridView(students);
-            System.out.print(PrinterHelper.ANSI_RED + "Enter a valid phone number: " + PrinterHelper.ANSI_RESET);
-            phoneNumber = scanner.nextLine(); 
+        if (!phoneNumber.isEmpty()) {
+            while (!IsValidInput("phoneNumber", phoneNumber)) {  
+                PrinterHelper.StudentGridView(studentToBeEdited);
+                System.out.print(PrinterHelper.ANSI_GREEN + "Leave blank to remain unaffected." + PrinterHelper.ANSI_RESET + "\r\n" + PrinterHelper.ANSI_RED + "Enter a valid phone number: " + PrinterHelper.ANSI_RESET);
+                phoneNumber = scanner.nextLine(); 
+            }
+            studentToBeEdited.get(0).PhoneNumber = phoneNumber;
         }
-        newStudent.PhoneNumber = phoneNumber;
-        PrinterHelper.StudentGridView(newStudentList);
+        PrinterHelper.StudentGridView(studentToBeEdited);
         
-        System.out.print("Edit semester: ");
+        System.out.print(PrinterHelper.ANSI_GREEN + "Leave blank to remain unaffected." + PrinterHelper.ANSI_RESET + "\r\n" + "Edit semester: ");
         String semester = scanner.nextLine();
-        while (!IsValidInput("semester", semester)) {  
-            PrinterHelper.StudentGridView(students);
-            System.out.print(PrinterHelper.ANSI_RED + "Enter a valid semester: " + PrinterHelper.ANSI_RESET);
-            semester = scanner.nextLine(); 
+        if (!semester.isEmpty()) {
+            while (!IsValidInput("semester", semester)) {  
+                PrinterHelper.StudentGridView(studentToBeEdited);
+                System.out.print(PrinterHelper.ANSI_GREEN + "Leave blank to remain unaffected." + PrinterHelper.ANSI_RESET + "\r\n" + PrinterHelper.ANSI_RED + "Enter a valid semester: " + PrinterHelper.ANSI_RESET);
+                semester = scanner.nextLine(); 
+            }
+            studentToBeEdited.get(0).Semester = semester;
+            studentToBeEdited.get(0).Courses = GetSemesterCourses(semester);
         }
-        newStudent.Semester = semester;
-        
-        // If the semester is changed, the student automatically enrolls to all the new semester courses, else it remains unaffected
-        if (newStudent.Semester == null ? oldStudent.get(0).Semester != null : !newStudent.Semester.equals(oldStudent.get(0).Semester)) {
-            newStudent.Courses = GetSemesterCourses(semester);
-        }
-        else{
-            newStudent.Courses = oldStudent.get(0).Courses;
-        }
-        
-        PrinterHelper.StudentGridView(newStudentList);
-        
-        StudentProvider.EditStudent(oldStudent.get(0), newStudent);
+        PrinterHelper.StudentGridView(studentToBeEdited);
+        StudentProvider.EditStudent(studentToBeEdited.get(0));
+        System.out.print(PrinterHelper.ANSI_GREEN + "Student " + studentToBeEdited.get(0).Name + " was edited successfully." + PrinterHelper.ANSI_RESET);
     }
     
     public static void DeleteStudent(){
@@ -185,16 +180,16 @@ public class StudentController{
     private static boolean IsValidInput(String type, String userInput){
         switch(type){
             case "name":
-                if (userInput.length() > 30 || userInput.isEmpty())
+                if (userInput.length() > 30)
                     return false;       
                 break;
                 
             case "email":
-                if (userInput.length() > 30 || userInput.isEmpty())
+                if (userInput.length() > 30)
                     return false;                
                 break;
             case "phoneNumber":
-                if (userInput.length() > 15 || userInput.isEmpty())
+                if (userInput.length() > 15)
                     return false;     
                 break;
             case "semester":
@@ -218,7 +213,7 @@ public class StudentController{
                    stringBuilder.insert(0, "0");
             }
                stringBuilder.insert(0, 'S');
-        } catch (Exception exception) {
+        } catch (NumberFormatException exception) {
             System.out.print(exception.getMessage());
         }
         return stringBuilder.toString();

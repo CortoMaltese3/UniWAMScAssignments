@@ -1,11 +1,10 @@
 package hendricks.Models;
 
-import java.util.ArrayList;
-
 public class Professor extends Entity{
     
     public String Profession;    
-    public ArrayList<Course> Courses;
+    //public ArrayList<Course> Courses;
+    public Course Course;
     
     public Professor(){
         
@@ -19,14 +18,12 @@ public class Professor extends Entity{
         this.Profession = parts[4];
     } 
     
-    
-    
-    public Professor(String[] parts, ArrayList<Course> courses) {
+    public Professor(String[] parts, Course course) {
         this.Id = parts[0];
         this.Name = parts[1];
         this.Email = parts[2];
         this.PhoneNumber = parts[3];
         this.Profession = parts[4];
-        this.Courses = courses;
+        this.Course = course;
     }   
 }

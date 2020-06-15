@@ -13,8 +13,11 @@ public class ProfessorProvider extends AllAroundProvider{
     public static void WriteToProfessorsFile(ArrayList<Professor> professors){
         for (int i = 0; i < professors.size(); i++) {
             String coursesAssignedToProfessor = "";
-            for (int j = 0; j < professors.get(i).Courses.size(); j++) {
-                coursesAssignedToProfessor = professors.get(i).Courses.get(j).Id + ",";
+            if (professors.get(i).Course.Professor.equals("*")) {
+                coursesAssignedToProfessor = "*";
+            }
+            else{
+                coursesAssignedToProfessor = professors.get(i).Course.Id;
             }
             try {
             FileWriter writer = CreateFileWriter(PROFESSOR_FILE, true);
@@ -26,22 +29,22 @@ public class ProfessorProvider extends AllAroundProvider{
         }
     }  
     
-        public static String CoursesAssignedToProfessor(Professor professor){    
-        String coursesToString = "";
-        StringBuilder stringBuilder = new StringBuilder();
-        try {
-            for (int i = 0; i < professor.Courses.size(); i++) {
-                stringBuilder.append(professor.Courses.get(i).Id).append(",");
-            }
-            coursesToString = stringBuilder.toString();
-            if (coursesToString.length() > 0 ) {
-                coursesToString = coursesToString.substring(0, coursesToString.length() - 1);
-            }
-            return coursesToString;
-        } catch (Exception e) {
-            return coursesToString;
-        }
-    } 
+//        public static void WriteToStudentsFile(ArrayList<Student> students){
+//        for (int i = 0; i < students.size(); i++) {
+//            String coursesAssignedToStudent = "";
+//            for (int j = 0; j < students.get(i).Courses.size(); j++) {
+//                coursesAssignedToStudent = students.get(i).Courses.get(j).Id + ",";
+//            }
+//            try {                
+//            FileWriter writer = CreateFileWriter(STUDENT_FILE, true);
+//            writer.write("\r\n" + students.get(i).Id + "|" + students.get(i).Name + "|" + students.get(i).Email + "|" + students.get(i).PhoneNumber + "|" + students.get(i).Semester + "|" + coursesAssignedToStudent + "|");
+//            writer.close();
+//            } catch (IOException ex) {
+//                System.out.println(ex.getMessage());
+//            }
+//        }
+//    }  
+    
     
     public static ArrayList<Professor> GetProfessors(){
         ArrayList <Professor> professors = new ArrayList<>();
@@ -56,7 +59,7 @@ public class ProfessorProvider extends AllAroundProvider{
                     professors.add(new Professor(parts)); 
                 }
                 else{
-                    professors.add(new Professor(parts, CourseProvider.GetCourses(parts[5]))); 
+                    professors.add(new Professor(parts, CourseProvider.GetCourse(parts[5]))); 
                 }
             }            
             reader.close(); 
@@ -80,8 +83,15 @@ public class ProfessorProvider extends AllAroundProvider{
     
     public static void AddProfessor(Professor newProfessor){        
         try {
+            String courseAssignedToProfessor = "";
+            if (newProfessor.Course == null) {
+                courseAssignedToProfessor = "*";
+            }
+            else{
+                courseAssignedToProfessor = newProfessor.Course.Id;                
+            }
             FileWriter writer = CreateFileWriter(PROFESSOR_FILE, true);
-            writer.write("\r\n" + newProfessor.Id + "|" + newProfessor.Name + "|" + newProfessor.Email + "|" + newProfessor.Email + "|" + newProfessor.Profession);
+            writer.write(newProfessor.Id + "|" + newProfessor.Name + "|" + newProfessor.Email + "|" + newProfessor.PhoneNumber + "|" + newProfessor.Profession + "|" + courseAssignedToProfessor + "\r\n");
             writer.close();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
@@ -90,7 +100,8 @@ public class ProfessorProvider extends AllAroundProvider{
     
     public static void EditProfessor(Professor oldProfessor, Professor newProfessor){
         ArrayList<Professor> professors = GetProfessors();
-        professors.set(professors.indexOf(oldProfessor), newProfessor);   
+        professors.removeIf(x -> (x.Id == null ? oldProfessor.Id == null : x.Id.equals(oldProfessor.Id)));
+        professors.add(newProfessor);    
         professors.sort(Comparator.comparing((professor) -> professor.Id));
         AllAroundProvider.ClearFile(PROFESSOR_FILE);
         for (int i = 0; i < professors.size(); i++) {

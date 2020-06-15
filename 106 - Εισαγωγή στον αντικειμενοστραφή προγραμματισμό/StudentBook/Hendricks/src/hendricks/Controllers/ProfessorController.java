@@ -24,73 +24,74 @@ public class ProfessorController {
         return professorToArrayList;
     }
     
-    public static void CreateProfessor(Professor professor){                
-        String newProfessorId = GetNextProfessorId();
-        Professor newProfessor = new Professor();
-        newProfessor.Id = newProfessorId;
-        ArrayList<Professor> newProfessorToArrayList = new ArrayList();
-        ArrayList<Course> allCourses = CourseProvider.GetCourses();
-        ArrayList<Course> freeCourses = GetFreeCourses(allCourses);
-        newProfessorToArrayList.add(newProfessor);
-        PrinterHelper.ProfessorGridView(newProfessorToArrayList);
-        Scanner scanner = new Scanner(System.in);
-        
-        System.out.print("Enter name: ");
-        String name = scanner.nextLine();
-        while (!IsValidInput("name", name)) {  
+    public static void CreateProfessor(){                
+            String newProfessorId = GetNextProfessorId();
+            Professor newProfessor = new Professor();
+            newProfessor.Id = newProfessorId;        
+            ArrayList<Professor> newProfessorToArrayList = new ArrayList();
+            //ArrayList<Course> allCourses = CourseProvider.GetCourses();
+            //ArrayList<Course> freeCourses = GetFreeCourses(allCourses);
+            newProfessorToArrayList.add(newProfessor);
             PrinterHelper.ProfessorGridView(newProfessorToArrayList);
-            System.out.print(PrinterHelper.ANSI_RED + "/r/nEnter a valid name: " + PrinterHelper.ANSI_RESET);
-            name = scanner.nextLine(); 
-        }
-        newProfessor.Name = name;
-        PrinterHelper.ProfessorGridView(newProfessorToArrayList);
-        
-        System.out.print("Enter email: ");
-        String email = scanner.nextLine();
-        while (!IsValidInput("email", email)) {  
-            PrinterHelper.ProfessorGridView(newProfessorToArrayList);
-            System.out.print(PrinterHelper.ANSI_RED + "/r/nEnter a valid email: " + PrinterHelper.ANSI_RESET);
-            email = scanner.nextLine(); 
-        }
-        newProfessor.Email = email;
-        PrinterHelper.ProfessorGridView(newProfessorToArrayList);
-        
-        System.out.print("Enter phone number: ");
-        String phoneNumber = scanner.nextLine();
-        while (!IsValidInput("phoneNumber", phoneNumber)) {  
-            PrinterHelper.ProfessorGridView(newProfessorToArrayList);
-            System.out.print(PrinterHelper.ANSI_RED + "/r/nEnter a valid phone number: " + PrinterHelper.ANSI_RESET);
-            phoneNumber = scanner.nextLine(); 
-        }
-        newProfessor.PhoneNumber = phoneNumber;
-        PrinterHelper.ProfessorGridView(newProfessorToArrayList);
-        
-        System.out.print("Enter professions: ");
-        String profession = scanner.nextLine();
-        while (!IsValidInput("profession", profession)) {  
-            PrinterHelper.ProfessorGridView(newProfessorToArrayList);
-            System.out.print(PrinterHelper.ANSI_RED + "\r\nEnter a valid profession. Choices are between Physics, Math and Engineering: " + PrinterHelper.ANSI_RESET);
-            profession = scanner.nextLine(); 
-        }
-        newProfessor.Profession = profession;
-        
-        PrinterHelper.CourseGridView(freeCourses);        
-        if (freeCourses.isEmpty()) {
-            System.out.print(PrinterHelper.ANSI_RED + "\r\nThere are no free Courses to assign to Professor." + PrinterHelper.ANSI_RESET);            
-        }
-        else{
-            System.out.print("Assign Course Id to Professor: ");
-            String courseId = scanner.nextLine();
-            while (!IsValidCourseId(courseId)) {  
-                PrinterHelper.CourseGridView(freeCourses);
-                System.out.print(PrinterHelper.ANSI_RED + "\r\nEnter a valid Course Id: " + PrinterHelper.ANSI_RESET);
-                courseId = scanner.nextLine(); 
+            Scanner scanner = new Scanner(System.in);
+
+            System.out.print("Enter name: ");
+            String name = scanner.nextLine();
+            while (!IsValidInput("name", name)) {  
+                PrinterHelper.ProfessorGridView(newProfessorToArrayList);
+                System.out.print(PrinterHelper.ANSI_RED + "Enter a valid name: " + PrinterHelper.ANSI_RESET);
+                name = scanner.nextLine(); 
             }
-            newProfessor.Courses.add(CourseProvider.GetCourse(courseId));
-            PrinterHelper.ProfessorGridView(newProfessorToArrayList);         
-        }
-        ProfessorProvider.AddProfessor(newProfessor);
-        System.out.print(PrinterHelper.ANSI_GREEN + "\r\nNew Professor was added successfuly" + PrinterHelper.ANSI_RESET); 
+            newProfessor.Name = name;
+            PrinterHelper.ProfessorGridView(newProfessorToArrayList);
+
+            System.out.print("Enter email: ");
+            String email = scanner.nextLine();
+            while (!IsValidInput("email", email)) {  
+                PrinterHelper.ProfessorGridView(newProfessorToArrayList);
+                System.out.print(PrinterHelper.ANSI_RED + "Enter a valid email: " + PrinterHelper.ANSI_RESET);
+                email = scanner.nextLine(); 
+            }
+            newProfessor.Email = email;
+            PrinterHelper.ProfessorGridView(newProfessorToArrayList);
+
+            System.out.print("Enter phone number: ");
+            String phoneNumber = scanner.nextLine();
+            while (!IsValidInput("phoneNumber", phoneNumber)) {  
+                PrinterHelper.ProfessorGridView(newProfessorToArrayList);
+                System.out.print(PrinterHelper.ANSI_RED + "nter a valid phone number: " + PrinterHelper.ANSI_RESET);
+                phoneNumber = scanner.nextLine(); 
+            }
+            newProfessor.PhoneNumber = phoneNumber;
+            PrinterHelper.ProfessorGridView(newProfessorToArrayList);
+
+            System.out.print("Enter professions: ");
+            String profession = scanner.nextLine();
+            while (!IsValidInput("profession", profession)) {  
+                PrinterHelper.ProfessorGridView(newProfessorToArrayList);
+                System.out.print(PrinterHelper.ANSI_RED + "Enter a valid profession. Choices are between Physics, Math and Engineering: " + PrinterHelper.ANSI_RESET);
+                profession = scanner.nextLine(); 
+            }
+            newProfessor.Profession = profession;
+
+
+            //PrinterHelper.CourseGridView(freeCourses);        
+    //        if (freeCourses.isEmpty()) {
+    //            System.out.print(PrinterHelper.ANSI_RED + "\r\nThere are no free Courses to assign to Professor." + PrinterHelper.ANSI_RESET);            
+    //        }
+    //        else{
+    //            System.out.print("Assign Course Id to Professor: ");
+    //            String courseId = scanner.nextLine();
+    //            while (!IsValidCourseId(courseId)) {  
+    //                PrinterHelper.CourseGridView(freeCourses);
+    //                System.out.print(PrinterHelper.ANSI_RED + "\r\nEnter a valid Course Id: " + PrinterHelper.ANSI_RESET);
+    //                courseId = scanner.nextLine(); 
+    //            }
+    //            newProfessor.Course = CourseProvider.GetCourse(courseId);
+    //            PrinterHelper.ProfessorGridView(newProfessorToArrayList);         
+    //        }
+            ProfessorProvider.AddProfessor(newProfessor);
+            System.out.print(PrinterHelper.ANSI_GREEN + "New Professor was added successfuly" + PrinterHelper.ANSI_RESET); 
     }
     
     public static void EditProfessor(){
@@ -144,6 +145,7 @@ public class ProfessorController {
         newProfessor.PhoneNumber = phoneNumber;
         PrinterHelper.ProfessorGridView(newProfessorToArrayList);
         
+        
         System.out.print("Edit profession: ");
         String profession = scanner.nextLine();
         while (!IsValidInput("profession", profession)) {  
@@ -152,8 +154,9 @@ public class ProfessorController {
             profession = scanner.nextLine(); 
         }
         newProfessor.Profession = profession;
-        PrinterHelper.ProfessorGridView(newProfessorToArrayList);
-
+        
+        
+        PrinterHelper.CourseGridView(freeCourses);
         if (freeCourses.isEmpty()) {
             System.out.print(PrinterHelper.ANSI_RED + "\r\nThere are no free Courses to assign to Professor." + PrinterHelper.ANSI_RESET);            
         }
@@ -165,15 +168,19 @@ public class ProfessorController {
                 System.out.print(PrinterHelper.ANSI_RED + "\r\nEnter a valid Course Id: " + PrinterHelper.ANSI_RESET);
                 courseId = scanner.nextLine(); 
             }
-            newProfessor.Courses.add(CourseProvider.GetCourse(courseId));
-            PrinterHelper.ProfessorGridView(newProfessorToArrayList);         
+            Course oldCourse = CourseProvider.GetCourse(courseId);
+            Course newCourse = oldCourse;
+            newCourse.Professor = newProfessor.Id;
+            newProfessor.Course = newCourse;
+            CourseProvider.EditCourse(oldCourse, newCourse);
         }
         ProfessorProvider.EditProfessor(oldProfessor.get(0), newProfessor);
+        PrinterHelper.ProfessorGridView(newProfessorToArrayList);     
         System.out.print(PrinterHelper.ANSI_GREEN + "\r\nNew Professor was edited successfuly" + PrinterHelper.ANSI_RESET); 
         
     }
     
-    public static void DeleteProfessor(String id){
+    public static void DeleteProfessor(){
         ArrayList<Professor> professors = GetProfessors(); 
         
         PrinterHelper.ProfessorGridView(professors);
@@ -197,7 +204,7 @@ public class ProfessorController {
     private static ArrayList<Course> GetFreeCourses(ArrayList<Course> allCourses){
         ArrayList<Course> freeCourses = new ArrayList<>();
         for (int i = 0; i < allCourses.size(); i++) {
-            if (allCourses.get(i).Professor.equals("")) {
+            if (allCourses.get(i).Professor.equals("*")) {
                 freeCourses.add(allCourses.get(i));
             }
         }

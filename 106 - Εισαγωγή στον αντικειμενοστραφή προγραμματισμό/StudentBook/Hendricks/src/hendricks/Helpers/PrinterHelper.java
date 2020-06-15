@@ -3,7 +3,6 @@ package hendricks.Helpers;
 import hendricks.Models.Course;
 import hendricks.Models.Professor;
 import hendricks.Models.Student;
-import hendricks.Providers.ProfessorProvider;
 import hendricks.Providers.StudentProvider;
 import java.util.List;
 import java.util.Scanner;
@@ -15,16 +14,14 @@ public class PrinterHelper {
     
     public static void PrintTitle(){
         ClearScreen();
-        String logo =   " _   _                 _              _          \n" +
-                        "( ) ( )               ( )     _      ( )         \n" +
-                        "| |_| |  __   ___    _| |_ __(_)  ___| |/ )  ___ \n" +
-                        "|  _  |/ __ \\  _  \\/ _  |  __) |/ ___)   ( /  __)\n" +
-                        "| | | |  ___/ ( ) | (_| | |  | | (___| |\\ \\\\__  \\\n" +
-                        "(_) (_)\\____)_) (_)\\__ _)_)  (_)\\____)_) (_)____/\n" +
-                        "                                                 \n" +
-                        "                                                 ";
+        String logo =   "██╗      █████╗  ██████╗  █████╗ ██╗   ██╗██╗   ██╗██╗     ██╗███╗   ██╗\n" +
+                        "██║     ██╔══██╗██╔════╝ ██╔══██╗██║   ██║██║   ██║██║     ██║████╗  ██║\n" +
+                        "██║     ███████║██║  ███╗███████║██║   ██║██║   ██║██║     ██║██╔██╗ ██║\n" +
+                        "██║     ██╔══██║██║   ██║██╔══██║╚██╗ ██╔╝██║   ██║██║     ██║██║╚██╗██║\n" +
+                        "███████╗██║  ██║╚██████╔╝██║  ██║ ╚████╔╝ ╚██████╔╝███████╗██║██║ ╚████║\n" +
+                        "╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝  ╚═══╝   ╚═════╝ ╚══════╝╚═╝╚═╝  ╚═══╝";
         System.out.println(logo);
-        System.out.println("-----------------Giorgos Kalomalos-----------------\n\n");
+        System.out.println("---------------------------Giorgos Kalomalos----------------------------\n\n");
     }
     
     public static void PrintMainMenuOptions(){
@@ -83,6 +80,7 @@ public class PrinterHelper {
             System.out.format(leftAlignFormat, courses.get(i).Id, courses.get(i).Title, courses.get(i).Semester, courses.get(i).Professor, courses.get(i).Profession);
         }
         System.out.format("+-------+--------------------------------+------------+--------------------------------+----------------------+%n");
+        System.out.println();
     }
     
     public static void StudentGridView(List<Student> students){
@@ -96,19 +94,27 @@ public class PrinterHelper {
             System.out.format(leftAlignFormat, students.get(i).Id, students.get(i).Name, students.get(i).Email, students.get(i).PhoneNumber, students.get(i).Semester, studentCourses);
         }
         System.out.format("+-------+--------------------------------+--------------------------------+-----------------+------------+--------------------------------+%n");
+        System.out.println();
     }
     
     public static void ProfessorGridView(List<Professor> professors){
         PrintTitle();        
         String leftAlignFormat = "| %-5s | %-30s | %-30s | %-15s | %-20s | %-30s |%n";
         System.out.format("+-------+--------------------------------+--------------------------------+-----------------+----------------------+--------------------------------+%n");
-        System.out.format("| Id    | Name                           | Email                          | Phone Number    | Profession           | Courses                        |%n");
+        System.out.format("| Id    | Name                           | Email                          | Phone Number    | Profession           | Course                         |%n");
         System.out.format("+-------+--------------------------------+--------------------------------+-----------------+----------------------+--------------------------------+%n");
         for (int i = 0; i < professors.size(); i++) {  
-            String professorCourses = ProfessorProvider.CoursesAssignedToProfessor(professors.get(i));
-            System.out.format(leftAlignFormat, professors.get(i).Id, professors.get(i).Name, professors.get(i).Email, professors.get(i).PhoneNumber, professors.get(i).Profession, professorCourses);
+            String professorCourse;
+            if (professors.get(i).Course == null) {
+                professorCourse = "*";
+            }
+            else{
+                professorCourse = professors.get(i).Course.Id;
+            }
+            System.out.format(leftAlignFormat, professors.get(i).Id, professors.get(i).Name, professors.get(i).Email, professors.get(i).PhoneNumber, professors.get(i).Profession, professorCourse);
         }
         System.out.format("+-------+--------------------------------+--------------------------------+-----------------+----------------------+--------------------------------+%n");
+        System.out.println();   
     }    
     
     public static void ClearScreen() {

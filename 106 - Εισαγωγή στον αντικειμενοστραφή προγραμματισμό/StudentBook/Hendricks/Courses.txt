@@ -2,5 +2,7 @@ C0101|Mechanics I|1|Apostolatos Th.|Physics
 C0102|Linear Algebra|1|Rassias|Math
 C0201|Introduction to Astrophysics|2|Dagklis Ioannis|Physics
 C0202|Quantum Mechanics I|2|Sfetsos K.|Physics
+C0203|test course|2||Math
 C0301|ElectroDynamics I|3|Georgalas A.|Engineering
-C0302|Electronics|3|*|Engineering
+C0302|Electronics|3|P0005|Engineering
+C0103|dvsddv|1||Physics
