@@ -61,7 +61,7 @@ public class CourseProvider extends AllAroundProvider{
         try {
             FileWriter writer = CreateFileWriter(COURSES_FILE, true);
             if (isNewCourse) {
-                writer.write(newCourse.Id + "|" + newCourse.Title + "|" + newCourse.Semester + "|" + "" + "|" + newCourse.Profession + "\r\n");
+                writer.write(newCourse.Id + "|" + newCourse.Title + "|" + newCourse.Semester + "|" + "*" + "|" + newCourse.Profession + "\r\n");
             }
             else{
                 writer.write(newCourse.Id + "|" + newCourse.Title + "|" + newCourse.Semester + "|" + newCourse.Professor + "|" + newCourse.Profession + "\r\n");
@@ -72,10 +72,10 @@ public class CourseProvider extends AllAroundProvider{
         }
     }
     
-    public static void EditCourse(Course oldCourse, Course newCourse){
+    public static void EditCourse(Course editedCourse){
         ArrayList<Course> courses = GetCourses();
-        courses.removeIf(x -> (x.Id == null ? oldCourse.Id == null : x.Id.equals(oldCourse.Id)));
-        courses.add(newCourse);  
+        courses.removeIf(x -> (x.Id == null ? editedCourse.Id == null : x.Id.equals(editedCourse.Id)));
+        courses.add(editedCourse);  
         courses.sort(Comparator.comparing((course) -> course.Id));
         AllAroundProvider.ClearFile(COURSES_FILE);
         for (int i = 0; i < courses.size(); i++) {

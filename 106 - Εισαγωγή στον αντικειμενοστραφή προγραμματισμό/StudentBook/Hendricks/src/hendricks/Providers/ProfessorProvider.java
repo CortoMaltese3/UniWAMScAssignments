@@ -27,24 +27,7 @@ public class ProfessorProvider extends AllAroundProvider{
                 System.out.println(ex.getMessage());
             }
         }
-    }  
-    
-//        public static void WriteToStudentsFile(ArrayList<Student> students){
-//        for (int i = 0; i < students.size(); i++) {
-//            String coursesAssignedToStudent = "";
-//            for (int j = 0; j < students.get(i).Courses.size(); j++) {
-//                coursesAssignedToStudent = students.get(i).Courses.get(j).Id + ",";
-//            }
-//            try {                
-//            FileWriter writer = CreateFileWriter(STUDENT_FILE, true);
-//            writer.write("\r\n" + students.get(i).Id + "|" + students.get(i).Name + "|" + students.get(i).Email + "|" + students.get(i).PhoneNumber + "|" + students.get(i).Semester + "|" + coursesAssignedToStudent + "|");
-//            writer.close();
-//            } catch (IOException ex) {
-//                System.out.println(ex.getMessage());
-//            }
-//        }
-//    }  
-    
+    }
     
     public static ArrayList<Professor> GetProfessors(){
         ArrayList <Professor> professors = new ArrayList<>();
@@ -98,10 +81,10 @@ public class ProfessorProvider extends AllAroundProvider{
         }
     }
     
-    public static void EditProfessor(Professor oldProfessor, Professor newProfessor){
+    public static void EditProfessor(Professor editedProfessor){
         ArrayList<Professor> professors = GetProfessors();
-        professors.removeIf(x -> (x.Id == null ? oldProfessor.Id == null : x.Id.equals(oldProfessor.Id)));
-        professors.add(newProfessor);    
+        professors.removeIf(x -> (x.Id == null ? editedProfessor.Id == null : x.Id.equals(editedProfessor.Id)));
+        professors.add(editedProfessor);    
         professors.sort(Comparator.comparing((professor) -> professor.Id));
         AllAroundProvider.ClearFile(PROFESSOR_FILE);
         for (int i = 0; i < professors.size(); i++) {

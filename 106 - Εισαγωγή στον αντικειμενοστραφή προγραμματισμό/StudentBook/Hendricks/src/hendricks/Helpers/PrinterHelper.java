@@ -9,19 +9,18 @@ import java.util.Scanner;
 
 public class PrinterHelper {
     public static final String ANSI_RESET  = "\u001B[0m";
-    public static final String ANSI_RED    = "\u001B[31m";
+    public static final String ANSI_RED    = "\033[0;91m";
     public static final String ANSI_GREEN  = "\u001B[32m";
     
     public static void PrintTitle(){
         ClearScreen();
-        String logo =   "██╗      █████╗  ██████╗  █████╗ ██╗   ██╗██╗   ██╗██╗     ██╗███╗   ██╗\n" +
-                        "██║     ██╔══██╗██╔════╝ ██╔══██╗██║   ██║██║   ██║██║     ██║████╗  ██║\n" +
-                        "██║     ███████║██║  ███╗███████║██║   ██║██║   ██║██║     ██║██╔██╗ ██║\n" +
-                        "██║     ██╔══██║██║   ██║██╔══██║╚██╗ ██╔╝██║   ██║██║     ██║██║╚██╗██║\n" +
-                        "███████╗██║  ██║╚██████╔╝██║  ██║ ╚████╔╝ ╚██████╔╝███████╗██║██║ ╚████║\n" +
-                        "╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝  ╚═══╝   ╚═════╝ ╚══════╝╚═╝╚═╝  ╚═══╝";
+        String logo =   "░░   ░░ ░░░░░░░ ░░░    ░░ ░░░░░░  ░░░░░░  ░░  ░░░░░░ ░░   ░░ ░░░░░░░ \n" +
+                        "▒▒   ▒▒ ▒▒      ▒▒▒▒   ▒▒ ▒▒   ▒▒ ▒▒   ▒▒ ▒▒ ▒▒      ▒▒  ▒▒  ▒▒      \n" +
+                        "▒▒▒▒▒▒▒ ▒▒▒▒▒   ▒▒ ▒▒  ▒▒ ▒▒   ▒▒ ▒▒▒▒▒▒  ▒▒ ▒▒      ▒▒▒▒▒   ▒▒▒▒▒▒▒ \n" +
+                        "▓▓   ▓▓ ▓▓      ▓▓  ▓▓ ▓▓ ▓▓   ▓▓ ▓▓   ▓▓ ▓▓ ▓▓      ▓▓  ▓▓       ▓▓ \n" +
+                        "██   ██ ███████ ██   ████ ██████  ██   ██ ██  ██████ ██   ██ ███████ ";
         System.out.println(logo);
-        System.out.println("---------------------------Giorgos Kalomalos----------------------------\n\n");
+        System.out.println("-------------------------Giorgos Kalomalos--------------------------\n\n");
     }
     
     public static void PrintMainMenuOptions(){
@@ -38,7 +37,7 @@ public class PrinterHelper {
         System.out.println("COURSES MENU\n");
         System.out.println("1. Show Courses");
         System.out.println("2. Add Course");
-        System.out.println("3. Edit Course");
+        System.out.println("3. Edit Course/Assign Professor");
         System.out.println("4. Remove Course");
         System.out.println("0. Back\n");         
     }
@@ -58,7 +57,7 @@ public class PrinterHelper {
         System.out.println("COURSES MENU\n");
         System.out.println("1. Show Professors");
         System.out.println("2. Add Professor");
-        System.out.println("3. Edit Professor");
+        System.out.println("3. Edit Professor/Assign Course");
         System.out.println("4. Remove Professor");
         System.out.println("0. Back\n");         
     }
@@ -131,5 +130,12 @@ public class PrinterHelper {
     
     public boolean IsNullOrEmpty(String userInput){
         return !(userInput!= null && !userInput.isEmpty());
-    }            
+    }       
+
+    private static String SubString(String fullString, int maxLength){
+        if (fullString.length() > maxLength) {
+            return fullString.substring(0, maxLength);
+        }
+        return fullString;
+    }
 }

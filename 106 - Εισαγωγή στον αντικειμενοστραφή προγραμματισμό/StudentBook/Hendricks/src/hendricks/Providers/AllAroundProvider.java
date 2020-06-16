@@ -165,7 +165,13 @@ public class AllAroundProvider {
     
     public static boolean IsYesOrNo(){
         String userInput = ScanMenuInput("yesOrNo");
-        return !(userInput.equalsIgnoreCase("n") || userInput.equalsIgnoreCase("no"));
+        if (userInput.equals("No") || userInput.equals("NO") || userInput.equals("N") || userInput.equals("n"))  {
+            return false;
+        }
+        else{
+            return true;
+        }
+        //return !(userInput.equals("n") || userInput.equalsIgnoreCase("no"));
     }
     
     public static void TerminateHendricks(){

@@ -3,5 +3,5 @@ P0001|Rassias|a.rassias@uniwa.gr|2103400001|Math|C0102
 P0002|Dagklis I.|i.dagklis@uniwa.gr|2103400002|Engineering|C0201
 P0003|Sfetsos K.|k.sfetsos@uniwa.gr|2103400003|Physics|C0202
 P0004|Georgalas A.|a.georgalas@uniwa.gr|2103400004|Physics|C0301
-P0005|sdvfvds|vsdfvsd|234523|Math|C0302
-P0006|dsfvsdvs|dsfvdsfvsd|23452345|Physics|*
+P0008|Test testakias|test@gmail.com|2104787478|Math|C0303
+P0009|Koula Aktypi|k.aktypi@uniwa.gr|3452342|Physics|C0104

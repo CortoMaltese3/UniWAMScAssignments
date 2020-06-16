@@ -1,15 +1,10 @@
-
 package hendricks.Controllers;
 
 import hendricks.Helpers.PrinterHelper;
-import hendricks.Models.Course;
-import hendricks.Models.Student;
-import hendricks.Providers.AllAroundProvider;
-import hendricks.Providers.CourseProvider;
-import hendricks.Providers.StudentProvider;
+import hendricks.Models.*;
+import hendricks.Providers.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 public class StudentController{
@@ -142,8 +137,8 @@ public class StudentController{
             studentToBeEdited.get(0).Semester = semester;
             studentToBeEdited.get(0).Courses = GetSemesterCourses(semester);
         }
-        PrinterHelper.StudentGridView(studentToBeEdited);
         StudentProvider.EditStudent(studentToBeEdited.get(0));
+        PrinterHelper.StudentGridView(studentToBeEdited);
         System.out.print(PrinterHelper.ANSI_GREEN + "Student " + studentToBeEdited.get(0).Name + " was edited successfully." + PrinterHelper.ANSI_RESET);
     }
     
@@ -161,7 +156,7 @@ public class StudentController{
         }                
         ArrayList<Student> oldStudentToArrayList = GetStudent(studentId);   
         PrinterHelper.StudentGridView(oldStudentToArrayList);
-        System.out.print(PrinterHelper.ANSI_RED + "Are you sure you want to remove student " + oldStudentToArrayList.get(0).Name + " ?" + PrinterHelper.ANSI_RESET);
+        System.out.print(PrinterHelper.ANSI_RED + "\r\nAre you sure you want to remove student " + oldStudentToArrayList.get(0).Name + " ?" + PrinterHelper.ANSI_RESET);
         if (AllAroundProvider.IsYesOrNo()) {
             StudentProvider.DeleteStudent(studentId);
             System.out.print(PrinterHelper.ANSI_GREEN + "Student " + oldStudentToArrayList.get(0).Name + " was removed successfully" + PrinterHelper.ANSI_RESET);
@@ -202,7 +197,7 @@ public class StudentController{
     
     private static String GetNextStudentId(){         
         StringBuilder stringBuilder = new StringBuilder();
-        List<Student> students = StudentProvider.GetStudents();
+        ArrayList<Student> students = StudentProvider.GetStudents();
         String lastStudentId = students.get(students.size() - 1).Id.substring(1);
         
         try {

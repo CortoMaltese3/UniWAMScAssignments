@@ -3,4 +3,3 @@ S0001|Afroditi Zevgoli|a.zevgoli@uniwa.gr|6987452147|1|C0101,C0102
 S0002|Maria Lagoudi|m.lagoudi@uniwa.gr|6945223669|1|C0101,C0102
 S0003|Giorgos Karatassos|g.karatassos@uniwa.gr|6985521102|3|C0301,C0302
 S0004|Giannis Apostolidis|a.apostolidis@uniwa.gr|6996999632|1|C0101,C0102,C0103
-S0005|Afroni Kokoneli|a.kokoni@uniwa.gr|697587778|1|C0101,C0102,C0103

@@ -89,14 +89,13 @@ public class StudentProvider extends AllAroundProvider{
         }
     }
     
-    
-        public static void DeleteStudent(String id){
-            ArrayList<Student> students = GetStudents();
-            students.removeIf(student -> (student.Id == null ? id == null : student.Id.equals(id)));
-            students.sort(Comparator.comparing((student) -> student.Id));    
-            AllAroundProvider.ClearFile(STUDENT_FILE);
-            for (int i = 0; i < students.size(); i++) {
-                AddStudent(students.get(i));
-            }
+    public static void DeleteStudent(String id){
+        ArrayList<Student> students = GetStudents();
+        students.removeIf(student -> (student.Id == null ? id == null : student.Id.equals(id)));
+        students.sort(Comparator.comparing((student) -> student.Id));    
+        AllAroundProvider.ClearFile(STUDENT_FILE);
+        for (int i = 0; i < students.size(); i++) {
+            AddStudent(students.get(i));
+        }
     }
 }

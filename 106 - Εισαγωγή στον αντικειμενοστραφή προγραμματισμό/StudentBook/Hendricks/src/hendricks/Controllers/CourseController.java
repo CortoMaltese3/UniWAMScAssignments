@@ -10,7 +10,6 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class CourseController {
-    
     public static ArrayList<Course> GetCourses(){
         ArrayList<Course> courses = CourseProvider.GetCourses();
         return courses;
@@ -24,7 +23,6 @@ public class CourseController {
     }
     
     public static void CreateCourse(){
-            
         Course newCourse = new Course();
         
         ArrayList<Course> newCourseToArrayList = new ArrayList();
@@ -72,14 +70,8 @@ public class CourseController {
     }
     
     public static void EditCourse(){
-        Course newCourse = new Course();
-        ArrayList<Course> newCourseToArrayList = new ArrayList<>();
-        ArrayList<Course> courses = GetCourses(); 
-        newCourseToArrayList.add(newCourse);
-        
-        ArrayList<Professor> allProfessors = ProfessorProvider.GetProfessors();
-        ArrayList<Professor> freeProfessors = GetFreeProfessors(allProfessors);
-        
+        ArrayList<Course> courses = GetCourses();
+            
         PrinterHelper.CourseGridView(courses);
         Scanner scanner = new Scanner(System.in);
         System.out.print("Course Id: ");
@@ -89,44 +81,50 @@ public class CourseController {
             System.out.print(PrinterHelper.ANSI_RED + "Enter a valid Course Id: " + PrinterHelper.ANSI_RESET);
             courseId = scanner.nextLine(); 
         }                
-        ArrayList<Course> oldCourse = GetCourse(courseId);        
-        newCourse.Id = courseId;
-        PrinterHelper.CourseGridView(newCourseToArrayList);
+        ArrayList<Course> courseToBeEdited = GetCourse(courseId);        
+        PrinterHelper.CourseGridView(courseToBeEdited);
         
-        System.out.print("Edit Course title: ");
+        System.out.print(PrinterHelper.ANSI_GREEN + "Leave blank to remain unaffected." + PrinterHelper.ANSI_RESET + "\r\n" + "Edit Course title: ");
         String title = scanner.nextLine();
-        while (!IsValidInput("title", title)) {  
-            PrinterHelper.CourseGridView(newCourseToArrayList);
-            System.out.print(PrinterHelper.ANSI_RED + "Enter a valid Course Id: " + PrinterHelper.ANSI_RESET);
-            title = scanner.nextLine(); 
+        if (!title.isEmpty()) {
+            while (!IsValidInput("title", title)) {  
+                PrinterHelper.CourseGridView(courseToBeEdited);
+                System.out.print(PrinterHelper.ANSI_GREEN + "Leave blank to remain unaffected." + PrinterHelper.ANSI_RESET + "\r\n" + PrinterHelper.ANSI_RED + "Enter a valid Course title: " + PrinterHelper.ANSI_RESET);
+                title = scanner.nextLine(); 
+            }
+            courseToBeEdited.get(0).Title = title;
         }
-        newCourse.Title = title;
-        PrinterHelper.CourseGridView(newCourseToArrayList);
+        PrinterHelper.CourseGridView(courseToBeEdited);
         
-        System.out.print("Edit Course semester: ");
+        System.out.print(PrinterHelper.ANSI_GREEN + "Leave blank to remain unaffected." + PrinterHelper.ANSI_RESET + "\r\n" + "Edit Course semester: ");
         String semester = scanner.nextLine();
-        while (!IsValidInput("semester", semester)) {  
-            PrinterHelper.CourseGridView(courses);
-            System.out.print(PrinterHelper.ANSI_RED + "Enter a valid Course semester: " + PrinterHelper.ANSI_RESET);
-            semester = scanner.nextLine(); 
+        if (!semester.isEmpty()) {
+            while (!IsValidInput("semester", semester)) {  
+                PrinterHelper.CourseGridView(courses);
+                System.out.print(PrinterHelper.ANSI_GREEN + "Leave blank to remain unaffected." + PrinterHelper.ANSI_RESET + "\r\n" + PrinterHelper.ANSI_RED + "Enter a valid Course semester: " + PrinterHelper.ANSI_RESET);
+                semester = scanner.nextLine(); 
+            } 
+            courseToBeEdited.get(0).Semester = semester;
         }
-        newCourse.Semester = semester;
-        PrinterHelper.CourseGridView(newCourseToArrayList);
+        PrinterHelper.CourseGridView(courseToBeEdited);
         
-        System.out.print("Edit Course profession: ");
+        System.out.print(PrinterHelper.ANSI_GREEN + "Leave blank to remain unaffected." + PrinterHelper.ANSI_RESET + "\r\n" + "Edit Course profession: ");
         String profession = scanner.nextLine();
-        while (!IsValidInput("profession", profession)) {  
-            PrinterHelper.CourseGridView(courses);
-            System.out.print(PrinterHelper.ANSI_RED + "Enter a valid profession. Choices are between Physics, Math and Engineering: " + PrinterHelper.ANSI_RESET);
-            profession = scanner.nextLine(); 
+        if (!profession.isEmpty()) {
+            while (!IsValidInput("profession", profession)) {  
+                PrinterHelper.CourseGridView(courses);
+                System.out.print(PrinterHelper.ANSI_GREEN + "Leave blank to remain unaffected." + PrinterHelper.ANSI_RESET + "\r\n" + PrinterHelper.ANSI_RED + "Enter a valid profession. Choices are between Physics, Math and Engineering: " + PrinterHelper.ANSI_RESET);
+                profession = scanner.nextLine(); 
+            }
+            courseToBeEdited.get(0).Profession = profession;
         }
-        newCourse.Profession = profession;
-        
+
         System.out.print("Would you like to proceed to Course assignment? ");
         if (AllAroundProvider.IsYesOrNo()) {
+            ArrayList<Professor> freeProfessors = GetFreeProfessors(courseToBeEdited.get(0));
             PrinterHelper.ProfessorGridView(freeProfessors);     
             if (freeProfessors.isEmpty()) {
-                System.out.print(PrinterHelper.ANSI_RED + "\r\nThere are no free Professors to assign to this Course." + PrinterHelper.ANSI_RESET);   
+                System.out.print(PrinterHelper.ANSI_RED + "\r\nThere are no free Professors with profession: [" + courseToBeEdited.get(0) + "] to assign to this Course." + PrinterHelper.ANSI_RESET);   
             }
             else{                
                 System.out.print("Assign Professor Id to this Course: ");
@@ -136,16 +134,15 @@ public class CourseController {
                     System.out.print(PrinterHelper.ANSI_RED + "\r\nEnter a valid Professor Id: " + PrinterHelper.ANSI_RESET);
                     professorId = scanner.nextLine(); 
                 }
-                Professor oldProfessor = ProfessorProvider.GetProfessor(professorId);
-                Professor newProfessor = oldProfessor;
-                newProfessor.Course = newCourse;
-                ProfessorProvider.EditProfessor(oldProfessor, newProfessor);
+                Professor professorToBeAssigned = ProfessorProvider.GetProfessor(professorId);
+                professorToBeAssigned.Course = courseToBeEdited.get(0);
+                ProfessorProvider.EditProfessor(professorToBeAssigned);
             } 
         }
-        CourseProvider.EditCourse(oldCourse.get(0), newCourse);
-        PrinterHelper.CourseGridView(newCourseToArrayList);     
-        System.out.print(PrinterHelper.ANSI_GREEN + "\r\nCourse was edited successfuly" + PrinterHelper.ANSI_RESET); 
-     
+        PrinterHelper.ResetScreen();
+        CourseProvider.EditCourse(courseToBeEdited.get(0));
+        PrinterHelper.CourseGridView(courseToBeEdited);     
+        System.out.print(PrinterHelper.ANSI_GREEN + "\r\nCourse " + courseToBeEdited.get(0) + " was edited successfuly" + PrinterHelper.ANSI_RESET); 
     }
     
     public static void DeleteCourse(){
@@ -162,17 +159,18 @@ public class CourseController {
         }                
         ArrayList<Course> oldCourseToArrayList = GetCourse(courseId);   
         PrinterHelper.CourseGridView(oldCourseToArrayList);
-        System.out.print(PrinterHelper.ANSI_RED + "Are you sure you want to remove course " + oldCourseToArrayList.get(0).Title + " ?" + PrinterHelper.ANSI_RESET);
+        System.out.print(PrinterHelper.ANSI_RED + "\r\nAre you sure you want to remove course " + oldCourseToArrayList.get(0).Title + " ?" + PrinterHelper.ANSI_RESET);
         if (AllAroundProvider.IsYesOrNo()) {
             ProfessorProvider.DeleteProfessor(courseId);
             System.out.print(PrinterHelper.ANSI_GREEN + "Professor " + oldCourseToArrayList.get(0).Title + " was removed successfully" + PrinterHelper.ANSI_RESET);
         } 
     }
     
-    private static ArrayList<Professor> GetFreeProfessors(ArrayList<Professor> allProfessors){
+    private static ArrayList<Professor> GetFreeProfessors(Course course){
+        ArrayList<Professor> allProfessors = ProfessorProvider.GetProfessors();
         ArrayList<Professor> freeProfessors = new ArrayList<>();
         for (int i = 0; i < allProfessors.size(); i++) {
-            if (allProfessors.get(i).Course.Professor.equals("*")) {
+            if (allProfessors.get(i).Course.Professor.equals("*") && allProfessors.get(i).Profession.equals(course.Profession)) {
                 freeProfessors.add(allProfessors.get(i));
             }
         }
@@ -228,7 +226,6 @@ public class CourseController {
             }
         }
         String lastCourseId = semesterCourses.get(semesterCourses.size() - 1).Id.substring(1);
-        //C0302
         try {
                int newCourseId = Integer.parseInt(lastCourseId) + 1;               
                stringBuilder.append(newCourseId);
