@@ -1,10 +1,7 @@
 package hendricks.Controllers;
-import hendricks.Helpers.PrinterHelper;
-import hendricks.Providers.CourseProvider;
-import hendricks.Models.Course;
-import hendricks.Models.Professor;
-import hendricks.Providers.AllAroundProvider;
-import hendricks.Providers.ProfessorProvider;
+import hendricks.Helpers.*;
+import hendricks.Providers.*;
+import hendricks.Models.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;

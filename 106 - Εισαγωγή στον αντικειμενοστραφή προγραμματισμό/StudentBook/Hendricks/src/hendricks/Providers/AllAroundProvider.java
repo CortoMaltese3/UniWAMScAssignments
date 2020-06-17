@@ -14,6 +14,7 @@ public class AllAroundProvider {
      private static final String COURSES_FILE = "\\Courses.txt";
      private static final String STUDENT_FILE = "\\Students.txt";
      private static final String PROFESSOR_FILE = "\\Professors.txt";
+     private static final String GRADES_FILE = "\\Grades.txt";
      
     public static void ClearFile(String filePath){
         try {
@@ -59,6 +60,7 @@ public class AllAroundProvider {
         File coursesFile = new File(GetCurrentWorkingFolderPath() + "\\Courses.txt");
         File studentFile = new File(GetCurrentWorkingFolderPath() + "\\Students.txt");
         File professorFile = new File(GetCurrentWorkingFolderPath() + "\\Professors.txt");
+        File gradeFile = new File(GetCurrentWorkingFolderPath() + "\\Grades.txt");
         if(!coursesFile.exists()){
             try {
                 coursesFile.createNewFile();
@@ -106,6 +108,46 @@ public class AllAroundProvider {
                 System.out.println(ex.getMessage());
             }
         }
+        if(!gradeFile.exists()){
+            try {
+                gradeFile.createNewFile();
+                FileWriter writer = CreateFileWriter(GRADES_FILE, true);
+                writer.write("S0000|C0101|8");
+                writer.write("\r\nS0000|C0102|7");
+                writer.write("\r\nS0000|C0201|5");
+                writer.write("\r\nS0000|C0202|6");
+                writer.write("\r\nS0000|C0301|0");
+                writer.write("\r\nS0000|C0302|0");
+                writer.write("\r\nS0001|C0101|10");
+                writer.write("\r\nS0001|C0102|9");
+                writer.write("\r\nS0001|C0201|0");
+                writer.write("\r\nS0001|C0202|0");
+                writer.write("\r\nS0001|C0301|0");
+                writer.write("\r\nS0001|C0302|0");
+                writer.write("\r\nS0002|C0101|7");
+                writer.write("\r\nS0002|C0102|6");
+                writer.write("\r\nS0002|C0201|0");
+                writer.write("\r\nS0002|C0202|0");
+                writer.write("\r\nS0002|C0301|0");
+                writer.write("\r\nS0002|C0302|0");
+                writer.write("\r\nS0003|C0101|4");
+                writer.write("\r\nS0003|C0102|8");
+                writer.write("\r\nS0003|C0201|7");
+                writer.write("\r\nS0003|C0202|3");
+                writer.write("\r\nS0003|C0301|4");
+                writer.write("\r\nS0003|C0302|6");
+                writer.write("\r\nS0004|C0101|10");
+                writer.write("\r\nS0004|C0102|9");
+                writer.write("\r\nS0004|C0201|8");
+                writer.write("\r\nS0004|C0202|9");
+                writer.write("\r\nS0004|C0301|0");
+                writer.write("\r\nS0004|C0302|0");                
+                writer.write("\r\n");
+                writer.close();
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
     }   
     
     public String ScanUserInput(String inputMessage){          
@@ -122,7 +164,7 @@ public class AllAroundProvider {
             case "mainMenu":       
                 System.out.print("Enter option: ");
                 userInput = scanner.nextLine();
-                while (!Arrays.stream(new String[]{"1", "2", "3", "0"}).anyMatch(userInput :: equals)) {                        
+                while (!Arrays.stream(new String[]{"1", "2", "3", "4", "0"}).anyMatch(userInput :: equals)) {                        
                     System.out.print(PrinterHelper.ANSI_RED + "Enter a valid main menu option: " + PrinterHelper.ANSI_RESET);
                     userInput = scanner.nextLine();                    
                 }
@@ -151,6 +193,14 @@ public class AllAroundProvider {
                     userInput = scanner.nextLine();
                 }                
                 break;
+            case "grade" :
+                System.out.print("Enter Grade menu option: ");                
+                userInput = scanner.nextLine();
+                while (!Arrays.stream(new String[]{"1", "2", "3", "4", "0"}).anyMatch(userInput :: equals)) {                        
+                    System.out.print(PrinterHelper.ANSI_RED + "Enter a valid Grade menu option: " + PrinterHelper.ANSI_RESET);
+                    userInput = scanner.nextLine();
+                }                
+                break;                
             case "yesOrNo" :
                 System.out.print("Type [Y]es to proceed or [N]o to abort: ");                
                 userInput = scanner.nextLine();

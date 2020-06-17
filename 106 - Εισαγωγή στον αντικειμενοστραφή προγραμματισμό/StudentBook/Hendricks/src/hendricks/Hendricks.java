@@ -1,6 +1,7 @@
 package hendricks;
 
 import hendricks.Controllers.CourseController;
+import hendricks.Controllers.GradeController;
 import hendricks.Controllers.ProfessorController;
 import hendricks.Controllers.StudentController;
 import hendricks.Providers.AllAroundProvider;
@@ -83,6 +84,26 @@ public class Hendricks {
                         break;
                     case "4":
                         CourseController.DeleteCourse();
+                        break;
+                    case "0":
+                        
+                        break;
+                }
+                PrinterHelper.ResetScreen();
+                break;
+            case "4":
+                PrinterHelper.PrintGradeMenuOptions();
+                String userGradeMenuOption = AllAroundProvider.ScanMenuInput("grade");
+                
+                switch(userGradeMenuOption){
+                    case "1":
+                        GradeController.GetStudentGrades();                         
+                        break;
+                    case "2":
+                        GradeController.GetCourseStatistics();
+                        break;
+                    case "3":
+                        GradeController.AlterStudentGradeToCourse();
                         break;
                     case "0":
                         

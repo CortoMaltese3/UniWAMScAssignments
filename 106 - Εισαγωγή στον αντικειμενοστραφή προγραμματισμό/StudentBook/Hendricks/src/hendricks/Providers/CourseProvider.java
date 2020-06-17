@@ -1,5 +1,5 @@
 package hendricks.Providers;
-import hendricks.Models.Course;
+import hendricks.Models.*;
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,6 +10,7 @@ import java.util.List;
 
 public class CourseProvider extends AllAroundProvider{
     private static final String COURSES_FILE = "\\Courses.txt";
+    private static final String GRADES_FILE = "\\Grades.txt";
     
     public static ArrayList<Course> GetCourses(String coursesIdsDelimited){
         ArrayList<Course> courses = new ArrayList<>();
@@ -59,14 +60,20 @@ public class CourseProvider extends AllAroundProvider{
     
     public static void AddCourse(Course newCourse, boolean isNewCourse){        
         try {
-            FileWriter writer = CreateFileWriter(COURSES_FILE, true);
+            FileWriter courseFileWriter = CreateFileWriter(COURSES_FILE, true);
+            FileWriter gradeFileWriter = CreateFileWriter(GRADES_FILE, true);
+            ArrayList<Student> students =  StudentProvider.GetStudents();
             if (isNewCourse) {
-                writer.write(newCourse.Id + "|" + newCourse.Title + "|" + newCourse.Semester + "|" + "*" + "|" + newCourse.Profession + "\r\n");
+                courseFileWriter.write(newCourse.Id + "|" + newCourse.Title + "|" + newCourse.Semester + "|" + "*" + "|" + newCourse.Profession + "\r\n");
+                for (int i = 0; i < students.size(); i++) {
+                    gradeFileWriter.write(students.get(i).Id + "|" + newCourse.Id + "|" + "0" + "\r\n");
+                }
             }
             else{
-                writer.write(newCourse.Id + "|" + newCourse.Title + "|" + newCourse.Semester + "|" + newCourse.Professor + "|" + newCourse.Profession + "\r\n");
+                courseFileWriter.write(newCourse.Id + "|" + newCourse.Title + "|" + newCourse.Semester + "|" + newCourse.Professor + "|" + newCourse.Profession + "\r\n");
             }
-            writer.close();
+            courseFileWriter.close();
+            gradeFileWriter.close();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }

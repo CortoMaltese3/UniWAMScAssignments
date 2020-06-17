@@ -1,5 +1,5 @@
 package hendricks.Providers;
-import hendricks.Models.Student;
+import hendricks.Models.*;
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,6 +9,7 @@ import java.util.Comparator;
 public class StudentProvider extends AllAroundProvider{
         
     private static final String STUDENT_FILE = "\\Students.txt";
+    private static final String GRADES_FILE = "\\Grades.txt";
     
     public static ArrayList<Student> GetStudents(){
         ArrayList <Student> students = new ArrayList<>();
@@ -42,9 +43,15 @@ public class StudentProvider extends AllAroundProvider{
     
     public static void AddStudent(Student newStudent){        
         try {
-            FileWriter writer = CreateFileWriter(STUDENT_FILE, true);
-            writer.write(newStudent.Id + "|" + newStudent.Name + "|" + newStudent.Email + "|" + newStudent.PhoneNumber + "|" + newStudent.Semester + "|" + CoursesAssignedToStudent(newStudent) +"\r\n");
-            writer.close();
+            FileWriter studentFileWriter = CreateFileWriter(STUDENT_FILE, true);
+            FileWriter gradeFileWriter = CreateFileWriter(GRADES_FILE, true);
+            ArrayList<Course> courses = CourseProvider.GetCourses();
+            studentFileWriter.write(newStudent.Id + "|" + newStudent.Name + "|" + newStudent.Email + "|" + newStudent.PhoneNumber + "|" + newStudent.Semester + "|" + CoursesAssignedToStudent(newStudent) +"\r\n");
+            for (int i = 0; i < courses.size(); i++) {
+                gradeFileWriter.write(newStudent.Id + "|" + courses.get(i).Id + "|" + "0" + "\r\n");
+            }
+            studentFileWriter.close();
+            gradeFileWriter.close();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
