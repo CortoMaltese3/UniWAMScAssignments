@@ -3,9 +3,8 @@ package hendricks.Models;
 public class Professor extends Entity{
     
     public String Profession;    
-    //public ArrayList<Course> Courses;
     public Course Course;
-    
+
     public Professor(){
         
     }

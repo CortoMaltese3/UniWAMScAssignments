@@ -1,6 +1,0 @@
-P0000|Apostolatos Th.|a.apostolatos@uniwa.gr|2104300000|Physics|C0101
-P0001|Rassias|a.rassias@uniwa.gr|2103400001|Math|C0102
-P0002|Dagklis I.|i.dagklis@uniwa.gr|2103400002|Engineering|C0201
-P0003|Sfetsos K.|k.sfetsos@uniwa.gr|2103400003|Physics|C0202
-P0004|Georgalas A.|a.georgalas@uniwa.gr|2103400004|Physics|C0301
-P0005|Tompras T.|t.tompras@uniwa.gr|2103400005|Engineering|*

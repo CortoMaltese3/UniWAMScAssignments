@@ -1,6 +1,7 @@
 package hendricks.Models;
 
 public class Course {
+
     public String Id;
     public String Title;
     public String Semester;    

@@ -3,9 +3,9 @@ package hendricks.Models;
 import java.util.ArrayList;
 
 public class Student extends Entity{
+    
     public String Semester;
     public ArrayList<Course> Courses;
-    
     public Student(){
         
     }

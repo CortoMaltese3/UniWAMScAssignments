@@ -1,13 +1,14 @@
 package hendricks.Helpers;
 
 import hendricks.Models.*;
-import hendricks.Providers.GradeProvider;
-import hendricks.Providers.StudentProvider;
+import hendricks.Providers.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
+
+/**Represents the presentation layer of the application's architecture. PrinterHelper is in charge of console printing, coloring, formatting **/
 public class PrinterHelper {
+
     public static final String ANSI_RESET  = "\u001B[0m";
     public static final String ANSI_RED    = "\033[0;91m";
     public static final String ANSI_GREEN  = "\u001B[32m";
@@ -42,7 +43,7 @@ public class PrinterHelper {
         System.out.println("4. Remove Course");
         System.out.println("0. Back\n");         
     }
-    
+
     public static void PrintStudentMenuOptions(){
         PrintTitle();
         System.out.println("COURSES MENU\n");
@@ -63,6 +64,9 @@ public class PrinterHelper {
         System.out.println("0. Back\n");         
     }
     
+    /**
+     *
+     */
     public static void PrintGradeMenuOptions(){
         PrintTitle();
         System.out.println("GRADES MENU\n");

@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+/**Represents the Business layer of the application's architecture for the Grade Business Model**/
 public class GradeController {
+    /**Returns a list of the grades from all the students available**/
     public static ArrayList<Grade> GetStudentGrades(){
         ArrayList<Student> students = StudentProvider.GetStudents();
         
@@ -26,16 +28,19 @@ public class GradeController {
         return allGrades;
     }
     
+    /**Returns the specified by the Student Grade, converted to ArrayList**/
     public static ArrayList<Grade> GetStudentGrades(Student student){
         ArrayList<Grade> allGrades = GradeProvider.GetGrades(student.Id);
         return allGrades;
     }
     
+    /**Creates a new Student**/
     public static void GetCourseStatistics(){
         ArrayList<Grade> grades = GradeProvider.GetGrades();
         PrinterHelper.GradeAverageGridView(grades);
     }
     
+    /**Alters the grade of a Course for a Student**/
     public static void AlterStudentGradeToCourse(){
         ArrayList<Student> students = StudentProvider.GetStudents();
         
@@ -62,6 +67,7 @@ public class GradeController {
             courseId = scanner.nextLine(); 
         }
         
+        /**If left unassigned, there will be no change at the Student grade.**/
         System.out.print(PrinterHelper.ANSI_GREEN + "Leave blank to remain unaffected." + PrinterHelper.ANSI_RESET + "\r\n" + "Edit Grade: ");
         String grade = scanner.nextLine();
         if (!grade.isEmpty()) {
@@ -82,6 +88,7 @@ public class GradeController {
         System.out.print(PrinterHelper.ANSI_GREEN + "\r\nGrade for Course " + CourseProvider.GetCourse(courseId).Title + " was altered successfuly to " + grade + PrinterHelper.ANSI_RESET); 
     }
     
+    /**User input validations**/
     private static boolean IsValidStudentId(String id, ArrayList<Student> students){
         for (int i = 0; i < students.size(); i++) {
             if(students.get(i).Id.equals(id)){

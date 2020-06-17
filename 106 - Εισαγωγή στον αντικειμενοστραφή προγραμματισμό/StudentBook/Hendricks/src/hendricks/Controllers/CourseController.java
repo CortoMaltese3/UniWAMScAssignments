@@ -6,12 +6,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+/**Represents the Business layer of the application's architecture for the Course Business Model**/
 public class CourseController {
+    /**Returns a list of all the courses available
+     * @return**/
     public static ArrayList<Course> GetCourses(){
         ArrayList<Course> courses = CourseProvider.GetCourses();
         return courses;
     }
     
+    /**Returns the specified by the id Course, converted to ArrayList
+     * @param id
+     * @return**/
     public static ArrayList<Course> GetCourse(String id){
         ArrayList<Course> courseToArrayList = new ArrayList<>();
         Course course = CourseProvider.GetCourse(id);
@@ -19,6 +25,7 @@ public class CourseController {
         return courseToArrayList;
     }
     
+    /**Creates a new Course**/
     public static void CreateCourse(){
         Course newCourse = new Course();
         
@@ -66,6 +73,7 @@ public class CourseController {
         System.out.print(PrinterHelper.ANSI_GREEN + "New Course was added successfuly" + PrinterHelper.ANSI_RESET);         
     }
     
+    /**Edits a specified Course**/
     public static void EditCourse(){
         ArrayList<Course> courses = GetCourses();
             
@@ -116,6 +124,7 @@ public class CourseController {
             courseToBeEdited.get(0).Profession = profession;
         }
 
+        /**If selected Course will be assigned to a free Professor of the specified Profession**/
         System.out.print("Would you like to proceed to Course assignment? ");
         if (AllAroundProvider.IsYesOrNo()) {
             ArrayList<Professor> freeProfessors = GetFreeProfessors(courseToBeEdited.get(0));
@@ -142,6 +151,7 @@ public class CourseController {
         System.out.print(PrinterHelper.ANSI_GREEN + "\r\nCourse " + courseToBeEdited.get(0) + " was edited successfuly" + PrinterHelper.ANSI_RESET); 
     }
     
+    /**Deletes specified Course**/
     public static void DeleteCourse(){
         ArrayList<Course> courses = GetCourses(); 
         
@@ -163,6 +173,7 @@ public class CourseController {
         } 
     }
     
+    /**Gets professors of the specified Course Profession that do not have any Course assignment**/
     private static ArrayList<Professor> GetFreeProfessors(Course course){
         ArrayList<Professor> allProfessors = ProfessorProvider.GetProfessors();
         ArrayList<Professor> freeProfessors = new ArrayList<>();
@@ -174,6 +185,32 @@ public class CourseController {
         return freeProfessors;
     }
     
+    /**Gets the next iterated Course id. Example if the last of Semester 3 is S0302 the Id S0303 will be returned**/
+    private static String GetNextCourseId(String semester){         
+        StringBuilder stringBuilder = new StringBuilder();
+        ArrayList<Course> allCourses = CourseProvider.GetCourses();
+        ArrayList<Course> semesterCourses = new ArrayList<>();
+        for (int i = 0; i < allCourses.size(); i++) {
+            if (allCourses.get(i).Semester.equals(semester)) {
+                semesterCourses.add(allCourses.get(i));
+            }
+        }
+        String lastCourseId = semesterCourses.get(semesterCourses.size() - 1).Id.substring(1);
+        try {
+               int newCourseId = Integer.parseInt(lastCourseId) + 1;               
+               stringBuilder.append(newCourseId);
+               while (stringBuilder.length() < 4
+                       ) {                
+                   stringBuilder.insert(0, "0");
+            }
+               stringBuilder.insert(0, 'C');
+        } catch (NumberFormatException exception) {
+            System.out.print(exception.getMessage());
+        }
+        return stringBuilder.toString();
+    }
+    
+    /**User input validations**/
     private static boolean IsValidInput(String type, String userInput){
         switch(type){
             case "title":
@@ -210,30 +247,5 @@ public class CourseController {
             }
         }
         return false;
-    }
-    
-        
-    private static String GetNextCourseId(String semester){         
-        StringBuilder stringBuilder = new StringBuilder();
-        ArrayList<Course> allCourses = CourseProvider.GetCourses();
-        ArrayList<Course> semesterCourses = new ArrayList<>();
-        for (int i = 0; i < allCourses.size(); i++) {
-            if (allCourses.get(i).Semester.equals(semester)) {
-                semesterCourses.add(allCourses.get(i));
-            }
-        }
-        String lastCourseId = semesterCourses.get(semesterCourses.size() - 1).Id.substring(1);
-        try {
-               int newCourseId = Integer.parseInt(lastCourseId) + 1;               
-               stringBuilder.append(newCourseId);
-               while (stringBuilder.length() < 4
-                       ) {                
-                   stringBuilder.insert(0, "0");
-            }
-               stringBuilder.insert(0, 'C');
-        } catch (NumberFormatException exception) {
-            System.out.print(exception.getMessage());
-        }
-        return stringBuilder.toString();
     }
 }

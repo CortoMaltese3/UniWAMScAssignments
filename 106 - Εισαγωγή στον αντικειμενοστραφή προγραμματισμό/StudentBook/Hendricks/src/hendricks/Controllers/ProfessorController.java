@@ -1,22 +1,22 @@
 package hendricks.Controllers;
 
 import hendricks.Helpers.PrinterHelper;
-import hendricks.Models.Course;
-import hendricks.Models.Professor;
-import hendricks.Providers.AllAroundProvider;
-import hendricks.Providers.CourseProvider;
-import hendricks.Providers.ProfessorProvider;
+import hendricks.Models.*;
+import hendricks.Providers.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+/**Represents the Business layer of the application's architecture for the Professor Business Model**/
 public class ProfessorController {
+    /**Returns a list of all the professors available**/
     public static ArrayList<Professor> GetProfessors(){
         ArrayList<Professor> professors = ProfessorProvider.GetProfessors();
         return professors;
     }
     
+    /**Returns the specified by the id Professor, converted to ArrayList**/
     public static ArrayList<Professor> GetProfessor(String id){
         ArrayList<Professor> professorToArrayList = new ArrayList<>();
         Professor professor = ProfessorProvider.GetProfessor(id);
@@ -24,6 +24,7 @@ public class ProfessorController {
         return professorToArrayList;
     }
     
+    /**Creates a new Professor**/
     public static void CreateProfessor(){                
         String newProfessorId = GetNextProfessorId();
         Professor newProfessor = new Professor();
@@ -76,6 +77,7 @@ public class ProfessorController {
         System.out.print(PrinterHelper.ANSI_GREEN + "New Professor was added successfuly" + PrinterHelper.ANSI_RESET); 
     }
     
+    /**Edits a specified Professor**/
     public static void EditProfessor(){
         ArrayList<Professor> professors = GetProfessors(); 
         
@@ -139,6 +141,7 @@ public class ProfessorController {
         }
         PrinterHelper.ProfessorGridView(professorToBeEdited);
         
+        /**If selected Professor will be assigned to a free Course of the specified Profession**/
         System.out.println("Would you like to proceed to courses assignment?");
         if (AllAroundProvider.IsYesOrNo()) {
             ArrayList<Course> freeCourses = GetFreeCourses(professorToBeEdited.get(0));
@@ -166,6 +169,7 @@ public class ProfessorController {
         System.out.print(PrinterHelper.ANSI_GREEN + "\r\nProfessor " + professorToBeEdited.get(0).Name + " was edited successfuly" + PrinterHelper.ANSI_RESET);
     }
     
+    /**Deletes specified Professor**/
     public static void DeleteProfessor(){
         ArrayList<Professor> professors = GetProfessors(); 
         
@@ -187,6 +191,7 @@ public class ProfessorController {
         } 
     }
     
+    /**Gets courses of the specified Course Profession that do not have any Professor assigned**/
     private static ArrayList<Course> GetFreeCourses(Professor professor){
         ArrayList<Course> allCourses = CourseProvider.GetCourses();
         ArrayList<Course> freeCourses = new ArrayList<>();
@@ -198,6 +203,7 @@ public class ProfessorController {
         return freeCourses;
     }
     
+    /**Gets the next iterated Professor id. Example if the last Professor id is P0004, the Id P0005 will be returned**/
     private static String GetNextProfessorId(){         
         StringBuilder stringBuilder = new StringBuilder();
         List<Professor> professors = ProfessorProvider.GetProfessors();
@@ -217,6 +223,18 @@ public class ProfessorController {
         return stringBuilder.toString();
     }
     
+    private static ArrayList<Course> GetProfessionCourses(String professor){
+        ArrayList<Course> professorCourses = new ArrayList<>();
+        ArrayList<Course> allCourses = CourseProvider.GetCourses();
+        for (int course = 0; course < allCourses.size(); course++) { 
+            if (allCourses.get(course).Professor.equals(professor)) {
+                professorCourses.add(allCourses.get(course));
+            }
+        }
+        return professorCourses;        
+    }
+    
+    /**User input validations**/
     private static boolean IsValidProfessorId(String id, ArrayList<Professor> professors){
         for (int i = 0; i < professors.size(); i++) {
             if(professors.get(i).Id.equals(id)){
@@ -257,16 +275,5 @@ public class ProfessorController {
                 break;
         }
         return true;
-    }
-    
-    private static ArrayList<Course> GetProfessionCourses(String professor){
-        ArrayList<Course> professorCourses = new ArrayList<>();
-        ArrayList<Course> allCourses = CourseProvider.GetCourses();
-        for (int course = 0; course < allCourses.size(); course++) { 
-            if (allCourses.get(course).Professor.equals(professor)) {
-                professorCourses.add(allCourses.get(course));
-            }
-        }
-        return professorCourses;        
     }
 }

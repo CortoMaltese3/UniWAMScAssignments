@@ -1,21 +1,19 @@
 package hendricks.Providers;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Arrays;
 import java.util.Scanner;
 import hendricks.Helpers.PrinterHelper;
 import java.io.PrintWriter;
 
+/**Represents the Data layer of the application's architecture. 
+ * Is in charge for managing the "database" of the text files and provides basic user input validations**/
 public class AllAroundProvider {
      private static final String COURSES_FILE = "\\Courses.txt";
      private static final String STUDENT_FILE = "\\Students.txt";
      private static final String PROFESSOR_FILE = "\\Professors.txt";
      private static final String GRADES_FILE = "\\Grades.txt";
      
+     /**Empties the specified text file**/
     public static void ClearFile(String filePath){
         try {
             PrintWriter printWriter = new PrintWriter(GetCurrentWorkingFolderPath() + filePath);
@@ -24,7 +22,7 @@ public class AllAroundProvider {
             System.out.println(ex.getMessage());
         }
     }
-    
+    /**Creates a FileWriter object to be used to append characters to specified text file**/
     public static FileWriter CreateFileWriter(String filePath, boolean append){
         FileWriter writer = null;
         try {            
@@ -35,6 +33,7 @@ public class AllAroundProvider {
         return writer;
     }
     
+    /**Returns the current folder path**/
     public static String GetCurrentWorkingFolderPath(){
         String currentDirectory = null;                              
         try{            
@@ -46,6 +45,7 @@ public class AllAroundProvider {
         return currentDirectory;
     }
     
+    /**Creates a buffered reader object to read from specified text file**/
     public static BufferedReader CreateBufferedReader(String filePath){
         BufferedReader fileReader = null;
         try {
@@ -56,6 +56,7 @@ public class AllAroundProvider {
         return fileReader;
     }
 
+    /**Feeds the application with raw data and creates raw data files if not existing**/
     public static void InitializeTextFiles(){
         File coursesFile = new File(GetCurrentWorkingFolderPath() + "\\Courses.txt");
         File studentFile = new File(GetCurrentWorkingFolderPath() + "\\Students.txt");
@@ -68,7 +69,7 @@ public class AllAroundProvider {
                 writer.write("C0101|Mechanics I|1|Apostolatos Th.|Physics");
                 writer.write("\r\nC0102|Linear Algebra|1|Rassias|Math");
                 writer.write("\r\nC0201|Introduction to Astrophysics|2|Dagklis Ioannis|Physics");
-                writer.write("\r\nC0202|Quantum Mechanics I|2|Sfetsos K.|Physics");
+                writer.write("\r\nC0202|Quantum Mechanics I|2|*|Physics");
                 writer.write("\r\nC0301|ElectroDynamics I|3|Georgalas A.|Engineering");
                 writer.write("\r\nC0302|Electronics|3|*|Engineering");
                 writer.write("\r\n");
@@ -99,7 +100,7 @@ public class AllAroundProvider {
                 writer.write("P0000|Apostolatos Th.|a.apostolatos@uniwa.gr|2104300000|Physics|C0101");
                 writer.write("\r\nP0001|Rassias|a.rassias@uniwa.gr|2103400001|Math|C0102");
                 writer.write("\r\nP0002|Dagklis I.|i.dagklis@uniwa.gr|2103400002|Engineering|C0201");
-                writer.write("\r\nP0003|Sfetsos K.|k.sfetsos@uniwa.gr|2103400003|Physics|C0202");
+                writer.write("\r\nP0003|Sfetsos K.|k.sfetsos@uniwa.gr|2103400003|Physics|*");
                 writer.write("\r\nP0004|Georgalas A.|a.georgalas@uniwa.gr|2103400004|Physics|C0301");
                 writer.write("\r\nP0005|Tompras T.|t.tompras@uniwa.gr|2103400005|Engineering|*");
                 writer.write("\r\n");
@@ -157,6 +158,7 @@ public class AllAroundProvider {
         return userInput;
     }
     
+    /**Scans and checks user input on menu option screens**/
     public static String ScanMenuInput(String type){
         Scanner scanner = new Scanner(System.in);
         String userInput = null;
@@ -213,6 +215,7 @@ public class AllAroundProvider {
         return userInput;
     }       
     
+    /**Checks yes/no user options**/
     public static boolean IsYesOrNo(){
         String userInput = ScanMenuInput("yesOrNo");
         if (userInput.equals("No") || userInput.equals("NO") || userInput.equals("N") || userInput.equals("n"))  {
@@ -221,9 +224,9 @@ public class AllAroundProvider {
         else{
             return true;
         }
-        //return !(userInput.equals("n") || userInput.equalsIgnoreCase("no"));
     }
     
+    /**Manages the termination of the application**/
     public static void TerminateHendricks(){
         PrinterHelper.PrintTitle();
         System.out.println(PrinterHelper.ANSI_RED + "Terminating..." + PrinterHelper.ANSI_RESET);

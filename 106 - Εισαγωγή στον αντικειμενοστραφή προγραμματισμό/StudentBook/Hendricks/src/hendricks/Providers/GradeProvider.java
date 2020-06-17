@@ -10,7 +10,7 @@ import java.util.Comparator;
 
 public class GradeProvider extends AllAroundProvider{
     private static final String GRADES_FILE = "\\Grades.txt";
-    
+
     public static ArrayList<Grade> GetGrades(){
         ArrayList<Grade> grades = new ArrayList<>();
         try {                  
@@ -79,7 +79,7 @@ public class GradeProvider extends AllAroundProvider{
         }
         return sum / studentGrades.size();
     }
-    
+
     public static double CalculateCourseAverageGrade(String courseId){
         ArrayList<Grade> courseGrades = GetGrades();
         courseGrades.removeIf(course -> (course.Course.Id == null ? courseId != null : !course.Course.Id.equals(courseId)));

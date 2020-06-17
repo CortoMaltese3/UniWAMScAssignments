@@ -27,7 +27,7 @@ public class CourseProvider extends AllAroundProvider{
         }
         return courses;
     }
-    
+
     public static ArrayList<Course> GetCourses(){
         ArrayList <Course> courses = new ArrayList<>();
         try {                  
@@ -46,7 +46,7 @@ public class CourseProvider extends AllAroundProvider{
         courses.sort(Comparator.comparing((course) -> course.Id));        
         return courses;
     }
-    
+
     public static Course GetCourse(String id){
         Course course = new Course();
         ArrayList<Course> courses = GetCourses();
@@ -78,7 +78,7 @@ public class CourseProvider extends AllAroundProvider{
             System.out.println(ex.getMessage());
         }
     }
-    
+
     public static void EditCourse(Course editedCourse){
         ArrayList<Course> courses = GetCourses();
         courses.removeIf(x -> (x.Id == null ? editedCourse.Id == null : x.Id.equals(editedCourse.Id)));

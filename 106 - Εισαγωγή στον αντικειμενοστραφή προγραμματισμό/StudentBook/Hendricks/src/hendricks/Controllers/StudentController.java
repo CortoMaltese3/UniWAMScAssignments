@@ -7,12 +7,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+/**Represents the Business layer of the application's architecture for the Student Business Model**/
 public class StudentController{
+    /**Returns a list of all the students available**/
     public static ArrayList<Student> GetStudents(){
         ArrayList<Student> students = StudentProvider.GetStudents();
         return students;
     }
     
+    /**Returns the specified by the id Student, converted to ArrayList**/
     public static ArrayList<Student> GetStudent(String id){
         ArrayList<Student> studentToArrayList = new ArrayList<>();
         Student student = StudentProvider.GetStudent(id);
@@ -20,6 +23,7 @@ public class StudentController{
         return studentToArrayList;
     }
     
+    /**Creates a new Student**/
     public static void CreateStudent(){
         String newStudentId = GetNextStudentId();
         Student newStudent = new Student();
@@ -75,6 +79,7 @@ public class StudentController{
         System.out.print(PrinterHelper.ANSI_GREEN + "Student " + newStudent.Name + " was added successfully." + PrinterHelper.ANSI_RESET);
     }
     
+    /**Edits a specified Student**/
     public static void EditStudent(){        
         ArrayList<Student> students = GetStudents(); 
         
@@ -142,6 +147,7 @@ public class StudentController{
         System.out.print(PrinterHelper.ANSI_GREEN + "Student " + studentToBeEdited.get(0).Name + " was edited successfully." + PrinterHelper.ANSI_RESET);
     }
     
+    /**Deletes specified Course**/
     public static void DeleteStudent(){
         ArrayList<Student> students = GetStudents(); 
         
@@ -163,6 +169,39 @@ public class StudentController{
         } 
     }
     
+    /**Gets the next iterated Student id. Example if the last Professor id is S0004, the Id S0005 will be returned**/
+    private static String GetNextStudentId(){         
+        StringBuilder stringBuilder = new StringBuilder();
+        ArrayList<Student> students = StudentProvider.GetStudents();
+        String lastStudentId = students.get(students.size() - 1).Id.substring(1);
+        
+        try {
+               int newStudentId = Integer.parseInt(lastStudentId) + 1;               
+               stringBuilder.append(newStudentId);
+               while (stringBuilder.length() < 4
+                       ) {                
+                   stringBuilder.insert(0, "0");
+            }
+               stringBuilder.insert(0, 'S');
+        } catch (NumberFormatException exception) {
+            System.out.print(exception.getMessage());
+        }
+        return stringBuilder.toString();
+    }
+    
+    private static ArrayList<Course> GetSemesterCourses(String semester){
+        ArrayList<Course> semesterCourses = new ArrayList<>();
+        ArrayList<Course> allCourses = CourseProvider.GetCourses();
+        for (int course = 0; course < allCourses.size(); course++) { 
+            String courseId = allCourses.get(course).Id;
+            if (courseId.contains("C0" + semester)) {
+                semesterCourses.add(allCourses.get(course));
+            }
+        }
+        return semesterCourses;        
+    }
+    
+    /**User input validations**/
     private static boolean IsValidStudentId(String id, ArrayList<Student> students){
         for (int i = 0; i < students.size(); i++) {
             if(students.get(i).Id.equals(id)){
@@ -193,36 +232,5 @@ public class StudentController{
                 break;
         }
         return true;
-    }
-    
-    private static String GetNextStudentId(){         
-        StringBuilder stringBuilder = new StringBuilder();
-        ArrayList<Student> students = StudentProvider.GetStudents();
-        String lastStudentId = students.get(students.size() - 1).Id.substring(1);
-        
-        try {
-               int newStudentId = Integer.parseInt(lastStudentId) + 1;               
-               stringBuilder.append(newStudentId);
-               while (stringBuilder.length() < 4
-                       ) {                
-                   stringBuilder.insert(0, "0");
-            }
-               stringBuilder.insert(0, 'S');
-        } catch (NumberFormatException exception) {
-            System.out.print(exception.getMessage());
-        }
-        return stringBuilder.toString();
-    }
-    
-    private static ArrayList<Course> GetSemesterCourses(String semester){
-        ArrayList<Course> semesterCourses = new ArrayList<>();
-        ArrayList<Course> allCourses = CourseProvider.GetCourses();
-        for (int course = 0; course < allCourses.size(); course++) { 
-            String courseId = allCourses.get(course).Id;
-            if (courseId.contains("C0" + semester)) {
-                semesterCourses.add(allCourses.get(course));
-            }
-        }
-        return semesterCourses;        
     }
 }
