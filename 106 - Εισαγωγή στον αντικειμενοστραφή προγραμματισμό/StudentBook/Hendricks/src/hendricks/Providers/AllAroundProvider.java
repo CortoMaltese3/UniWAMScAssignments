@@ -204,10 +204,10 @@ public class AllAroundProvider {
                 }                
                 break;                
             case "yesOrNo" :
-                System.out.print("Type [Y]es to proceed or [N]o to abort: ");                
+                System.out.print("\r\nType [Y]es to proceed or [N]o to abort: ");                
                 userInput = scanner.nextLine();
                 while (!Arrays.stream(new String[]{"y", "Y", "Yes", "YES", "n", "N", "No", "NO"}).anyMatch(userInput :: equals)) {                        
-                    System.out.print(PrinterHelper.ANSI_RED + "Type [Y]es to proceed or [N]o to abort: " + PrinterHelper.ANSI_RESET);
+                    System.out.print(PrinterHelper.ANSI_RED + "\r\nType [Y]es to proceed or [N]o to abort: " + PrinterHelper.ANSI_RESET);
                     userInput = scanner.nextLine();
                 }    
                 break;
